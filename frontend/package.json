@@ -18,7 +18,6 @@
   "devDependencies": {
     "@eslint/css": "^0.9.0",
     "@eslint/js": "^9.36.0",
-    "@poupe/eslint-plugin-tailwindcss": "^0.2.4", "_comment": "kan tas bort senare",
     "@types/node": "^24.6.0",
     "@types/react": "^19.1.16",
     "@types/react-dom": "^19.1.9",

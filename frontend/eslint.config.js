@@ -21,23 +21,5 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
-  },
-  {
-    files: ['**/*.css'],
-    language: 'css/css',
-    plugins: {
-      css,
-      tailwindcss,
-    },
-    rules: {
-      ...tailwindcss.configs.recommended.rules,
-    },
-    settings: {
-      tailwindcss: {
-        config: 'tailwind.config.js', // om du har config, annars kan du låta det vara
-        cssFiles: ['**/*.css', '!**/node_modules/**', '!dist/**'],
-        // valfritt, anpassa efter behov
-      },
-    },
-  },
+  }
 ])

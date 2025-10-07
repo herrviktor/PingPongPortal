@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <div>
-        <p className="primary-txt">
+        <p className="my-text">
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
