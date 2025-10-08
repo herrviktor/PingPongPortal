@@ -10,7 +10,7 @@ const BookingSchema = new Schema<Ibooking>({
   date: { type: Date, required: true },
   time: { type: String, required: true },
   facility: { type: Schema.Types.ObjectId, ref: 'Facility', required: true }
-});
+}, { _id: false });
 
 interface Iuser {
   _id: Types.ObjectId;
