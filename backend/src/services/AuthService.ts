@@ -18,8 +18,8 @@ const register = async (data: IUserRegister) => {
         $or: [{ email: data.email }, {username: data.username}] 
     });
     if (existingUser) {
-        if (existingUser.email) throw new Error('Emailen används redan på sidan');
-        if (existingUser.username) throw new Error('Användarnamnet används redan på sidan');
+        if (existingUser.email === data.email) throw new Error('Emailen används redan på sidan');
+        if (existingUser.username === data.username) throw new Error('Användarnamnet används redan på sidan');
     }
 
     const hashedPassword = await bcrypt.hash(data.password, 10);
