@@ -22,9 +22,9 @@ interface Iuser {
 }
 
 const UserSchema = new Schema<Iuser>({
-  username: { type: String, required: true, unique: true },
+  username: { type: String, required: true, unique: true, maxlength: 20 },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  password: { type: String, required: true, minlength: 8 },
   isAdmin: { type: Boolean, default: false },
   bookings: { type: [BookingSchema], default: [] }
 });

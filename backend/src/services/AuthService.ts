@@ -1,6 +1,9 @@
 import UserModel from "../models/UserModel";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 interface IUserRegister {
     username: string;
@@ -14,6 +17,12 @@ if (!JWT_SECRET) {
 }
 
 const register = async (data: IUserRegister) => {
+    if (data.username.length > 20) {
+        throw new Error("Användarnamnet får högst vara 20 tecken");
+    }
+    if (data.password.length < 8) {
+        throw new Error("Lösenordet måste vara minst 8 tecken");
+    }
     const existingUser = await UserModel.findOne({ 
         $or: [{ email: data.email }, {username: data.username}] 
     });
