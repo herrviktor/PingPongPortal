@@ -1,9 +1,5 @@
-export interface IUser {
-    id?: string;
-    username?: string;
-    email: string;
-    password: string;
-}
+import type { IUser } from "../interfaces/interfaces";
+
 
 const API_BASE = "http://localhost:3000";
 

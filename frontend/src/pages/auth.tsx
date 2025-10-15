@@ -15,7 +15,11 @@ const Auth: React.FC = () => {
                     <button type="submit">Logga In</button>
                 </form>
             </div>
-
+            <div>
+                <p>
+                    Eller
+                </p>
+            </div>
             <div>
                 <h2>Registrera</h2>
                 <form>

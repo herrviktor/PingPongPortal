@@ -1,17 +1,7 @@
-import { createContext, useState, type ReactNode } from "react";
+import { createContext, useState} from "react";
 import * as authService from '../services/authService';
-import type { IUser } from "../services/authService";
-
-export interface IAuthContext {
-    user: IUser | null;
-    login: (email: string, password: string) => Promise<void>;
-    register: (formData: IUser) => Promise<void>;
-    logout: () => void;
-}
-
-interface IAuthProviderProps {
-  children: ReactNode;
-}
+import type {  } from "../services/authService";
+import type { IAuthContext, IAuthProviderProps, IUser } from "../interfaces/interfaces";
 
 export const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
@@ -22,15 +12,25 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
     });
 
     const login = async (email: string, password: string):Promise<void> => {
-        const data = await authService.login({ email, password});
-        setUser(data.user);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        localStorage.setItem("token", data.token);
+        try {
+            const data = await authService.login({ email, password});
+            setUser(data.user);
+            localStorage.setItem("user", JSON.stringify(data.user));
+            localStorage.setItem("token", data.token);
+        } catch (error) {
+            console.error("Inloggning misslyckades:", error);
+            throw error;
+        }
     };
 
     const register = async (formData: IUser) => {
-        await authService.register(formData);
-        return login(formData.email, formData.password);
+        try {
+            await authService.register(formData);
+            return login(formData.email, formData.password);
+        } catch (error) {
+            console.error("Registrering misslyckades", error);
+            throw error; 
+        }
     };
 
     const logout = () => {
