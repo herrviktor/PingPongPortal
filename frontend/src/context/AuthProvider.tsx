@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
     const logout = () => {
         setUser(null);
         localStorage.clear();
+        console.log("användare utloggad");
     };
 
     return (

@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 const Header = () => {
+
+    const {logout} = useAuth();
+
     return (
         <header>
             <div>
@@ -14,6 +18,7 @@ const Header = () => {
                     <li><Link to="/info">Bokningsvilkor</Link></li>
                 </ul>
             </nav>
+            <Link to="/" onClick={logout}>Logga ut</Link>
         </header>
     )
 }
