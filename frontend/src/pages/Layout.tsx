@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 
 const Layout: React.FC = () => {
     return (
-        <div>
+        <div className="bg-amber-200">
             <Header />
             <main>
                 <Outlet />
