@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import connectDB from './db';
 import authRoutes from "./routes/authRoutes";
+import adminRoutes from "./routes/adminRoutes";
 import cors from 'cors';
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(cors({
 app.use(express.json());
 
 app.use("/auth", authRoutes);
+app.use("/admin", adminRoutes);
 
 app.get('/', (req: Request, res: Response) => {
     res.send('testing backend');
