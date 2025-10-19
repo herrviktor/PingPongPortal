@@ -8,9 +8,7 @@ const updateUser = async (id: string, data: IUpdateUser) => {
         if (data.username.length > 20) throw new Error("Användarnamnet får högst vara 20 tecken");
     }
     if (data.password) {
-        if (data.password.length < 8) {
-            throw new Error("Lösenordet måste vara minst 8 tecken");
-        }
+        if (data.password.length < 8) throw new Error("Lösenordet måste vara minst 8 tecken");
         updateData.password = await bcrypt.hash(data.password, 10);
     }
     return UserModel.findByIdAndUpdate(id, updateData, { new: true });
