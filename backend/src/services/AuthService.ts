@@ -1,15 +1,10 @@
 import UserModel from "../models/UserModel";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
+import { IUserRegister } from "../interfaces/interfaces";
 
 dotenv.config();
-
-interface IUserRegister {
-    username: string;
-    email: string;
-    password: string;
-}
 
 const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
@@ -23,8 +18,8 @@ const register = async (data: IUserRegister) => {
     if (data.password.length < 8) {
         throw new Error("Lösenordet måste vara minst 8 tecken");
     }
-    const existingUser = await UserModel.findOne({ 
-        $or: [{ email: data.email }, {username: data.username}] 
+    const existingUser = await UserModel.findOne({
+        $or: [{ email: data.email }, { username: data.username }]
     });
     if (existingUser) {
         if (existingUser.email === data.email) throw new Error('Emailen används redan på sidan');
@@ -48,7 +43,7 @@ const login = async (email: string, password: string) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) throw new Error('Felaktigt användarnamn eller lösenord');
 
-    const token = jwt.sign({ id: user._id, email: user.email}, JWT_SECRET, {expiresIn: '24h'});
+    const token = jwt.sign({ id: user._id, email: user.email, isAdmin: user.isAdmin }, JWT_SECRET, { expiresIn: '24h' });
 
     return { token, user: { id: user._id, username: user.username, email: user.email } };
 };
