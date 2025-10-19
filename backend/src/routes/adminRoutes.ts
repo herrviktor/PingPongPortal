@@ -1,10 +1,11 @@
 import express from 'express';
 import AdminController from '../controllers/AdminController';
+import { isAdmin, isLoggedIn } from '../middlewares/middleware';
 
 const router = express.Router();
 
-router.post('/create', AdminController.createUser);
-router.put('/update/:id', AdminController.updateUser);
-router.delete('/delete/:id', AdminController.deleteUser);
+router.post('/create', isLoggedIn, isAdmin, AdminController.createUser);
+router.put('/update/:id', isLoggedIn, isAdmin, AdminController.updateUser);
+router.delete('/delete/:id', isLoggedIn, isAdmin, AdminController.deleteUser);
 
 export default router;

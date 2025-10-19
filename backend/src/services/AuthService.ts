@@ -43,7 +43,7 @@ const login = async (email: string, password: string) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) throw new Error('Felaktigt användarnamn eller lösenord');
 
-    const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, { expiresIn: '24h' });
+    const token = jwt.sign({ id: user._id, email: user.email, isAdmin: user.isAdmin }, JWT_SECRET, { expiresIn: '24h' });
 
     return { token, user: { id: user._id, username: user.username, email: user.email } };
 };
