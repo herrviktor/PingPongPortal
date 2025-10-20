@@ -2,6 +2,10 @@ import { IUpdateUser } from "../interfaces/interfaces";
 import bcrypt from "bcrypt";
 import UserModel from "../models/UserModel";
 
+const getAllUsers = async () => {
+    return UserModel.find({});
+}
+
 const updateUser = async (id: string, data: IUpdateUser) => {
     const updateData = { ...data };
     if (data.username) {
@@ -19,6 +23,7 @@ const deleteUser = async (id: string) => {
 };
 
 export default {
+    getAllUsers,
     updateUser,
-    deleteUser
+    deleteUser,
 };
