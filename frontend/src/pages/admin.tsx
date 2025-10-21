@@ -62,10 +62,10 @@ const Admin: React.FC = () => {
 
     const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!editUser || !editUser.id) return;
+        if (!editUser || !editUser._id) return;
         setError(null);
         try {
-            await updateUser(editUser.id, editUser);
+            await updateUser(editUser._id, editUser);
             setEditUser(null);
             fetchUsers();
         } catch (err) {
@@ -103,8 +103,8 @@ const Admin: React.FC = () => {
                 <h3>Användare</h3>
                 <ul>
                     {users.map(user => (
-                        <li key={user.id}>
-                            {editUser && editUser.id === user.id ? (
+                        <li key={user._id}>
+                            {editUser && editUser._id === user._id ? (
                                 <form onSubmit={handleUpdate}>
                                     <input
                                         type="text"
@@ -134,7 +134,7 @@ const Admin: React.FC = () => {
                                 <>
                                     {user.username} ({user.email})
                                     <button onClick={() => handleEdit(user)}>Redigera</button>
-                                    <button onClick={() => handleDelete(user.id)}>Radera</button>
+                                    <button onClick={() => handleDelete(user._id)}>Radera</button>
                                 </>
 
                             )}
