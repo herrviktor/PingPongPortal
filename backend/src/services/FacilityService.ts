@@ -16,6 +16,14 @@ const getFirstFacility = async () => {
     return facility;
 };
 
+const getAllFacilities = async () => {
+  const facilities = await FacilityModel.find();
+  if (!facilities) {
+    throw new Error("Inga sporthallar hittades");
+  }
+  return facilities;
+};
+
 const getTimeslotsForDate = async (id: string, date: Date) => {
     const facility = await FacilityModel.findById(id);
     if (!facility) {
@@ -30,8 +38,9 @@ const getTimeslotsForDate = async (id: string, date: Date) => {
     return dateObj.timeslots;
 };
 
-export {
+export default {
     getFacilityById,
     getFirstFacility,
+    getAllFacilities,
     getTimeslotsForDate,
 }
