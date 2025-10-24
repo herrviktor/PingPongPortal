@@ -17,7 +17,7 @@ const getFirstFacility = async () => {
 };
 
 const getAllFacilities = async () => {
-  const facilities = await FacilityModel.find();
+  const facilities = await FacilityModel.find({}, 'name');
   if (!facilities) {
     throw new Error("Inga sporthallar hittades");
   }
