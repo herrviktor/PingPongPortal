@@ -8,12 +8,12 @@ dotenv.config();
 export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.header('Authorization');
     if (!authHeader) {
-        return res.json(401).json({ message: 'Authorization token saknas' });
+        return res.status(401).json({ message: 'Authorization token saknas' });
     }
 
     const token = authHeader.split(' ')[1];
     if (!token) {
-        return res.json(401).json({ message: 'Token finns inte i headern' });
+        return res.status(401).json({ message: 'Token finns inte i headern' });
     }
 
     try {
