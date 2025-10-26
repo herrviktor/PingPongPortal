@@ -21,7 +21,7 @@ export const getFacilityById = async (id: string): Promise<IFacility> => {
 };
 
 export const getTimeslotsForDate = async (facilityId: string, date: string): Promise<ITimeslot[]> => {
-    const res = await fetch(`${API_BASE}/${facilityId}/availebleDates/${date}/timeslots`);
+    const res = await fetch(`${API_BASE}/${facilityId}/availableDates/${date}/timeslots`);
     if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.message || "Kunde inte hämta tider");
