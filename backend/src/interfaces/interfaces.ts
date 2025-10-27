@@ -28,7 +28,7 @@ export interface IJwtPayload {
 declare global {
   namespace Express {
     interface Request {
-      user?: IJwtPayload;
+      user: IJwtPayload;
     }
   }
 }
