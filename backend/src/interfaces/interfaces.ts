@@ -12,6 +12,13 @@ export interface IUpdateUser {
     password?: string;
 }
 
+export interface IBookingInput {
+  facilityId: string;
+  date: Date;
+  time: string;
+  userId: string;
+}
+
 export interface IJwtPayload {
   id: string;
   email: string;
