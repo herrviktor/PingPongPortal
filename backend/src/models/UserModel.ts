@@ -1,6 +1,7 @@
 import { Schema, model, Types } from 'mongoose';
 
 interface Ibooking {
+  _id?: Types.ObjectId;
   date: Date;
   time: string;
   facility: Types.ObjectId;
@@ -10,7 +11,7 @@ const BookingSchema = new Schema<Ibooking>({
   date: { type: Date, required: true },
   time: { type: String, required: true },
   facility: { type: Schema.Types.ObjectId, ref: 'Facility', required: true }
-}, { _id: false });
+}, { _id: true });
 
 interface Iuser {
   _id: Types.ObjectId;
