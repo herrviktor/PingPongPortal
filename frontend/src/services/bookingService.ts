@@ -19,7 +19,7 @@ export const getUserBookings = async () => {
   return res.json();
 };
 
-export const createBooking = async (facilityId: string, date: string, time: string,) => {
+export const createBooking = async (facilityId: string, date: string, time: string) => {
   const res = await fetch(`${API_BASE}/create`, {
     method: "POST",
     headers: getAuthHeaders(),

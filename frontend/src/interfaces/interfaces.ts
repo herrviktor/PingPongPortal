@@ -20,8 +20,8 @@ export interface IAuthProviderProps {
 
 export interface ITimeslot {
   time: string;
-  isbooked: boolean;
-  isbookedBy: string | null;
+  isBooked: boolean;
+  isBookedBy: string | null;
 }
 
 export interface IAvailableDate {
