@@ -38,9 +38,22 @@ const getTimeslotsForDate = async (id: string, date: Date) => {
     return dateObj.timeslots;
 };
 
+const searchFacilities = async (query: string) => {
+    if (!query || typeof query !== 'string') {
+        throw new Error('Sökfråga saknas eller är ogiltig');
+    }
+    const regex = new RegExp(query, 'i');
+    const facilities = await FacilityModel.find({
+        $or: [{ name: regex }, { locations: regex }]
+    }).limit(10);
+    return facilities;
+};
+
+
 export default {
     getFacilityById,
     getFirstFacility,
     getAllFacilities,
     getTimeslotsForDate,
+    searchFacilities,
 }
