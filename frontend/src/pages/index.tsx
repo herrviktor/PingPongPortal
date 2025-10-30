@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { ITimeslot, IFacility } from "../interfaces/interfaces";
 import { getAllFacilities, getTimeslotsForDate } from "../services/facilityService";
+import { createBooking } from "../services/bookingService";
 
 
 const Index: React.FC = () => {
@@ -9,6 +10,7 @@ const Index: React.FC = () => {
     const [date, setDate] = useState<string>("");
     const [timeslots, setTimeslots] = useState<ITimeslot[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const [bookingMessage, setBookingMessage] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchInitialData = async () => {
@@ -55,10 +57,28 @@ const Index: React.FC = () => {
         fetchTimeslots();
     }, [selectedFacility, date]);
 
+    const handleBooking = async (time: string) => {
+    if (!selectedFacility || !date) return;
+    setBookingMessage(null);
+    try {
+      await createBooking(selectedFacility, date, time);
+      setBookingMessage("Bokning lyckades!");
+      const updatedTimeslots = await getTimeslotsForDate(selectedFacility, date);
+      setTimeslots(updatedTimeslots);
+    } catch (err) {
+      if (err instanceof Error) {
+        setBookingMessage(err.message);
+      } else {
+        setBookingMessage("Okänt fel vid bokning");
+      }
+    } 
+  };
+
+
     return (
         <div>
             <h2>Hitta tider</h2>
-            {error && <p>{error}</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
             
             <h3>Välj Pingishall</h3>
             <select 
@@ -81,11 +101,16 @@ const Index: React.FC = () => {
             <h3>Tider att boka</h3>
             <ul>
                 {timeslots.map((t, i) => (
-                    <li key={i}>
-                        {t.time}
+                    <li
+                        key={i}
+                        onClick={() => !t.isBooked && handleBooking(t.time)}
+                        style={{ cursor: t.isBooked ? "not-allowed" : "pointer" }}
+                    >
+                        {t.isBooked ? "Bokad" : t.time}
                     </li>
                 ))}
             </ul>
+            {bookingMessage && <p>{bookingMessage}</p>}
         </div>
     );
 };

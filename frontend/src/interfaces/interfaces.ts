@@ -20,8 +20,8 @@ export interface IAuthProviderProps {
 
 export interface ITimeslot {
   time: string;
-  isbooked: boolean;
-  isbookedBy: string | null;
+  isBooked: boolean;
+  isBookedBy: string | null;
 }
 
 export interface IAvailableDate {
@@ -34,4 +34,17 @@ export interface IFacility {
   name: string;
   hourlyRate: number;
   availableDate: IAvailableDate[];
+}
+
+interface IFacilityInfo {
+  id: string;
+  name: string;
+  hourlyRate?: number;
+}
+
+export interface IBooking {
+  _id: string;
+  date: string;
+  time: string;
+  facility: IFacilityInfo;
 }
