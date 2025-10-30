@@ -35,3 +35,16 @@ export interface IFacility {
   hourlyRate: number;
   availableDate: IAvailableDate[];
 }
+
+interface IFacilityInfo {
+  id: string;
+  name: string;
+  hourlyRate?: number;
+}
+
+export interface IBooking {
+  _id: string;
+  date: string;
+  time: string;
+  facility: IFacilityInfo;
+}
