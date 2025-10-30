@@ -33,8 +33,20 @@ const getTimeslots = async (req: Request, res: Response) => {
     }
 };
 
+const searchFacilities = async (req: Request, res: Response) => {
+    try {
+        const { q } = req.query;
+        const results = await FacilityService.searchFacilities(q as string);
+        res.json(results);
+    } catch (error) {
+        res.status(400).json({ message: (error as Error).message });
+    }
+};
+
+
 export default {
     getFacility,
     getAllFacilities,
     getTimeslots,
+    searchFacilities,
 };

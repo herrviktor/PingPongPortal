@@ -25,12 +25,14 @@ const AvailableDateSchema = new Schema<IAvailableDate>({
 interface IFacility {
   name: string;
   hourlyRate: number;
+  locations: string[];
   availableDates: IAvailableDate[];
 }
 
 const FacilitySchema = new Schema<IFacility>({
   name: { type: String, required: true },
   hourlyRate: { type: Number, required: true },
+  locations: { type: [String], required: true, default: [] },
   availableDates: { type: [AvailableDateSchema], default: [] }
 });
 
