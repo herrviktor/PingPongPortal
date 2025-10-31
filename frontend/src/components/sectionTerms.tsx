@@ -2,13 +2,13 @@ import type{ ReactNode } from 'react';
 
 type SectionProps = {
   title: string;
-  listItems?: string[]; // gör valfri med ?
-  children?: ReactNode; // barn som valfri prop
+  listItems?: string[];
+  children?: ReactNode;
 };
 
 const SectionTerms = ({ title, listItems, children }: SectionProps) => {
   return (
-    <div>
+    <div className="text-xs sm:text-sm md:text-md lg:text-lg xl:text-2xl">
       <h2>{title}</h2>
       {listItems && (
         <ul>

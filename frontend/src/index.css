@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+@theme {
+  --body-bg: #FFF5E6;
+  --main-bg: #F4A16A;
+  --text-col: #333333;
+}
+
+@layer components {
+  .main-h2 {
+    color: var(--text-color);
+    @apply text-3xl font-bold py-5;
+  }
+  .my-text {
+    @apply text-5xl text-red-900;
+  }
+}
+
 .my-text {
   @apply text-5xl text-red-900;
 }
@@ -30,8 +46,7 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  
   min-width: 320px;
   min-height: 100vh;
 }
@@ -66,13 +81,14 @@ input {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: #333333;
     background-color: #ffffff;
   }
   a:hover {
     color: #747bff;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #003366;
+    color: #FFF5E6;
   }
 }
