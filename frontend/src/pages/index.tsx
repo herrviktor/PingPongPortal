@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
-import type { ITimeslot, IFacility } from "../interfaces/interfaces";
+import type { ITimeslot, IFacility, ISearchFacility } from "../interfaces/interfaces";
 import { getAllFacilities, getTimeslotsForDate } from "../services/facilityService";
 import { createBooking } from "../services/bookingService";
+import { useOutletContext } from "react-router-dom";
+
+interface OutletContext {
+  searchResults: Pick<ISearchFacility, "_id" | "name">[] | null;
+};
 
 
 const Index: React.FC = () => {
@@ -11,6 +16,9 @@ const Index: React.FC = () => {
     const [timeslots, setTimeslots] = useState<ITimeslot[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [bookingMessage, setBookingMessage] = useState<string | null>(null);
+    
+    const { searchResults } = useOutletContext<OutletContext>();
+    console.log("Index: sökresultat från outlet context:", searchResults);
 
     useEffect(() => {
         const fetchInitialData = async () => {
@@ -37,6 +45,13 @@ const Index: React.FC = () => {
         };
         fetchInitialData();
     }, []);
+
+    useEffect(() => {
+        if (searchResults && searchResults.length > 0) {
+        setSelectedFacility(searchResults[0]._id);
+        }
+    }, [searchResults]);
+
 
     useEffect(() => {
         if (!selectedFacility || !date) return;
@@ -74,6 +89,7 @@ const Index: React.FC = () => {
     } 
   };
 
+  const optionsToShow = searchResults ?? facilities;
 
     return (
         <div>
@@ -85,12 +101,18 @@ const Index: React.FC = () => {
                 value={selectedFacility ?? ""}
                 onChange={(e) => setSelectedFacility(e.target.value)}
             >
-                {facilities.map((f) => (
+                {optionsToShow.map((f) => (
                     <option key={f._id} value={f._id}>
                         {f.name}
                     </option>
                 ))}
+
             </select>
+            {optionsToShow.length === 0 && (
+            <div style={{ color: "red", marginTop: "0.5rem" }}>
+                Ingen pingishall matchades sökresultatet
+            </div>
+            )}
             <h3>Välj datum</h3>
             <input 
                 type="date"

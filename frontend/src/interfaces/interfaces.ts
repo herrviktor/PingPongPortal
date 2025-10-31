@@ -48,3 +48,8 @@ export interface IBooking {
   time: string;
   facility: IFacilityInfo;
 }
+
+export interface ISearchFacility {
+  _id: string;
+  name: string;
+}

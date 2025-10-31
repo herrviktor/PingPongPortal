@@ -2,6 +2,14 @@ import type { IFacility, ITimeslot } from "../interfaces/interfaces";
 
 const API_BASE = "http://localhost:3000/facilities";
 
+const getAuthHeaders = () => {
+    const token = localStorage.getItem('token');
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : '',
+    };
+};
+
 export const getAllFacilities = async (): Promise<Pick<IFacility, "_id" | "name">[]> => {
     const res = await fetch(`${API_BASE}`);
     if (!res.ok) {
@@ -25,6 +33,20 @@ export const getTimeslotsForDate = async (facilityId: string, date: string): Pro
     if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.message || "Kunde inte hämta tider");
+    }
+    return res.json();
+};
+
+export const searchFacilities = async (query: string) => {
+    if (query.length < 3) {
+        return [];
+    }
+    const res = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}`, {
+        headers: getAuthHeaders(),
+    });
+    if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Sökfel");
     }
     return res.json();
 };
