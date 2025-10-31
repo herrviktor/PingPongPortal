@@ -3,6 +3,8 @@ import { useAuth } from "../hooks/useAuth";
 import { searchFacilities } from "../services/facilityService";
 import { useState } from "react";
 import type { ISearchFacility } from "../interfaces/interfaces";
+import CButton from "./button";
+import CInput from "./Input";
 
 interface HeaderProps {
   onSearchResults: (results: ISearchFacility[] | null) => void;
@@ -49,22 +51,23 @@ const Header = ({ onSearchResults }: HeaderProps) => {
             </div>
             <nav>
                 <ul>
-                    <li><Link to="/">Hem</Link></li>
+                    <li><CButton to="/">Hem</CButton></li>
                     {!user && <li><Link to="/auth">Register/LoggaIn</Link></li>}
                     {user && <li><Link to="/user">Min sida</Link></li>}
-                    <li><Link to="/admin">Admin</Link></li>
+                    {user && <li><Link to="/admin">Admin</Link></li>}
                     <li><Link to="/booking-terms">Bokningsvilkor</Link></li>
                 </ul>
             </nav>
             {user && (
         <>
-          <input
+          <CInput
             type="text"
             placeholder="Sök anläggning..."
             value={query}
             onChange={onSearchChange}
-            aria-label="Sök anläggning"
+            ariaLabel="Sök anläggning"
           />
+
           {error && <div style={{ color: "red" }}>{error}</div>}
 
           <button onClick={logout}>Logga ut</button>
