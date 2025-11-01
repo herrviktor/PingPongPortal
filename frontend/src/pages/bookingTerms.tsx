@@ -2,7 +2,7 @@ import SectionTerms from "../components/sectionTerms";
 
 const BookingTerms: React.FC = () => {
     return (
-        <div className="flex flex-col items-center px-5 pb-5">
+        <div className="gFlexS flex-col px-5 pb-5">
             <h2 className="main-h2">Bokningsvilkor</h2>
             <div className="flex flex-wrap justify-evenly">
                 <div className="w-xs sm:w-sm md:w-md lg:w-lg xl:w-2xl">

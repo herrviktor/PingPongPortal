@@ -19,6 +19,10 @@
     color: var(--text-col);
     @apply text-3xl font-bold py-5;
   }
+  .main-h3 {
+    color: var(--text-col);
+    @apply text-xl pb-2;
+  }
   .my-text {
     @apply text-5xl text-red-900;
   }
@@ -32,18 +36,33 @@
     color: var(--text-col);
     @apply rounded-[5px] px-3 py-2;
   }
-  .drop-button {
+  .gFlexB {
+    @apply flex items-center justify-between;
+  }
+  .gFlexS {
+    @apply flex items-center justify-start;
+  }
+  .gFlexA {
+    @apply flex items-center justify-around;
+  }
+  .index-select {
+    background-color: var(--theme-col);
+    color: var(--text-col);
+    @apply rounded-[5px] px-3 py-2;
+  }
+}
+
+.drop-button {
     background-color: var(--theme-col);
     color: var(--text-col);
   }
+
+.index-border {
+  border: 0.3rem var(--theme-col) solid;
 }
 
 .footer-info {
   color: var(--theme-col);
-}
-
-.my-text {
-  @apply text-5xl text-red-900;
 }
 
 :root {
