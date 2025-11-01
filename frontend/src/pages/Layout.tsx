@@ -15,7 +15,7 @@ const handleSearchResults = (results: Pick<{ _id: string; name: string; }, "_id"
   return (
     <div className="bg-[#FFF5E6] min-h-screen">
       <Header onSearchResults={handleSearchResults} />
-      <main className="bg-[#F4A16A] min-h-96">
+      <main className="bg-[#F4A16A] min-h-120">
         <Outlet context={{ searchResults }} />
       </main>
       <Footer />
