@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import type { IUser } from "../interfaces/interfaces";
 import CInput from "../components/Input";
-import CButton from "../components/button";
+import CButton from "../components/Button";
 
 const Auth: React.FC = () => {
     
