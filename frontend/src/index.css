@@ -5,6 +5,7 @@
   --main-col: #F4A16A;
   --text-col: #333333;
   --button-col: #003366;
+  --theme-col: #F38D44;
 }
 
 @layer components {
@@ -17,13 +18,17 @@
   }
   .cButton {
     background-color: var(--button-col);
-    color: var(--body-bg);
+    color: var(--body-col);
     @apply rounded-[7px] px-3 py-2;
   }
   .cInput {
-    background-color: var(--body-col);
+    background-color: var(--theme-col);
     color: var(--text-col);
     @apply rounded-[5px] px-3 py-2;
+  }
+  .drop-button {
+    background-color: var(--theme-col);
+    color: var(--text-col);
   }
 }
 
@@ -45,8 +50,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-
 
 body {
   margin: 0;
@@ -71,9 +74,5 @@ h1 {
   }
   a:hover {
     color: #747bff;
-  }
-  button {
-    background-color: #003366;
-    color: #FFF5E6;
   }
 }
