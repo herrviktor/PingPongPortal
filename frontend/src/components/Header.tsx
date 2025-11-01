@@ -50,7 +50,7 @@ const Header = ({ onSearchResults }: HeaderProps) => {
             <div className="flex justify-between items-center px-4">
               <div className="flex items-center">
                 <img src="../../public/bilder/icon.png" className="w-9 h-9" />
-                <h1>PingPongPortal</h1>
+                <h1 className="header-logo">PingPongPortal</h1>
               </div>
               {user && (
                 <div>

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Joti+One&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -9,6 +10,11 @@
 }
 
 @layer components {
+  .header-logo {
+    font-family: 'Joti One', cursive;
+    color: var(--theme-col);
+    @apply font-extrabold pl-2;
+  }
   .main-h2 {
     color: var(--text-col);
     @apply text-3xl font-bold py-5;
@@ -30,6 +36,10 @@
     background-color: var(--theme-col);
     color: var(--text-col);
   }
+}
+
+.footer-info {
+  color: var(--theme-col);
 }
 
 .my-text {
