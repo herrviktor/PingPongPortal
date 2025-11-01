@@ -2,6 +2,7 @@ import { createContext, useState} from "react";
 import * as authService from '../services/authService';
 import type {  } from "../services/authService";
 import type { IAuthContext, IAuthProviderProps, IUser } from "../interfaces/interfaces";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
@@ -10,6 +11,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
         const stored = localStorage.getItem("user");
         return stored ? JSON.parse(stored) : null;
     });
+    const navigate = useNavigate();
 
     const login = async (email: string, password: string):Promise<void> => {
         try {
@@ -37,6 +39,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
         setUser(null);
         localStorage.clear();
         console.log("användare utloggad");
+        navigate("/");
     };
 
     return (

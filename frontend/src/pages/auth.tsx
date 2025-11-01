@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import type { IUser } from "../interfaces/interfaces";
+import CInput from "../components/Input";
+import CButton from "../components/button";
 
 const Auth: React.FC = () => {
     
@@ -53,25 +55,25 @@ const Auth: React.FC = () => {
                 <form onSubmit={handleLoginSubmit}>
                     <div>
                         <label>E-post:</label>
-                        <input 
-                            type="email" 
-                            id="login-email" 
+                        <CInput
+                            type="email"
+                            id="login-email"
                             name="email"
                             value={loginData.email}
-                            onChange={handleLoginChange} 
+                            onChange={handleLoginChange}
                         />
                     </div>
                     <div>
                         <label>Lösenord:</label>
-                        <input 
-                            type="password" 
-                            id="login-password" 
+                        <CInput
+                            type="password"
+                            id="login-password"
                             name="password"
                             value={loginData.password}
-                            onChange={handleLoginChange} 
+                            onChange={handleLoginChange}
                         />
                     </div>
-                    <button type="submit">Logga In</button>
+                    <CButton type="submit">Logga In</CButton>
                 </form>
             </div>
             <div>
@@ -84,35 +86,35 @@ const Auth: React.FC = () => {
                 <form onSubmit={handleRegisterSubmit}>
                     <div>
                         <label>Användarnamn:</label>
-                        <input 
-                            type="text" 
-                            id="register-username" 
+                        <CInput
+                            type="text"
+                            id="register-username"
                             name="username"
                             value={registerData.username}
-                            onChange={handleRegisterChange} 
+                            onChange={handleRegisterChange}
                         />
                     </div>
                     <div>
                         <label>E-post:</label>
-                        <input 
-                            type="email" 
-                            id="register-email" 
+                        <CInput
+                            type="email"
+                            id="register-email"
                             name="email"
                             value={registerData.email}
-                            onChange={handleRegisterChange} 
+                            onChange={handleRegisterChange}
                         />
                     </div>
                     <div>
                         <label>Lösenord:</label>
-                        <input 
-                            type="password" 
-                            id="register-password" 
+                        <CInput
+                            type="password"
+                            id="register-password"
                             name="password"
                             value={registerData.password}
-                            onChange={handleRegisterChange} 
+                            onChange={handleRegisterChange}
                         />
                     </div>
-                    <button type="submit">Registrera</button>
+                    <CButton type="submit">Registrera</CButton>
                 </form>
             </div>
         </>

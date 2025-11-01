@@ -1,8 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { searchFacilities } from "../services/facilityService";
 import { useState } from "react";
 import type { ISearchFacility } from "../interfaces/interfaces";
+import CButton from "./Button";
+import CInput from "./Input";
+import Dropdown from "./DropDown";
 
 interface HeaderProps {
   onSearchResults: (results: ISearchFacility[] | null) => void;
@@ -44,32 +47,39 @@ const Header = ({ onSearchResults }: HeaderProps) => {
 
     return (
         <header>
-            <div>
-                <h1>PingPongPortal</h1>
+            <div className="flex justify-between items-center px-4">
+              <div className="flex items-center">
+                <img src="../../public/bilder/icon.png" className="w-9 h-9" />
+                <h1 className="header-logo">PingPongPortal</h1>
+              </div>
+              {user && (
+                <div>
+                  <CInput
+                    type="text"
+                    placeholder="Sök anläggning..."
+                    value={query}
+                    onChange={onSearchChange}
+                    ariaLabel="Sök anläggning"
+                  />
+
+                  {error && <div style={{ color: "red" }}>{error}</div>}
+
+                </div>
+              )}
             </div>
-            <nav>
-                <ul>
-                    <li><Link to="/">Hem</Link></li>
-                    {!user && <li><Link to="/auth">Register/LoggaIn</Link></li>}
-                    {user && <li><Link to="/user">Min sida</Link></li>}
-                    <li><Link to="/admin">Admin</Link></li>
-                    <li><Link to="/booking-terms">Bokningsvilkor</Link></li>
+            <nav className="">
+                <ul className="hidden sm:flex justify-around items-center my-4">
+                    <li><CButton to="/">Hem</CButton></li>
+                    {user && <li><CButton to="/user">Min sida</CButton></li>}
+                    {user && <li><CButton to="/admin">Admin</CButton></li>}
+                    <li><CButton to="/booking-terms">Bokningsvilkor</CButton></li>
+                    {!user && <li><CButton to="/auth">Register/LoggaIn</CButton></li>}
+                    {user && <li><CButton onClick={logout}>Logga ut</CButton></li>}
                 </ul>
             </nav>
-            {user && (
-        <>
-          <input
-            type="text"
-            placeholder="Sök anläggning..."
-            value={query}
-            onChange={onSearchChange}
-            aria-label="Sök anläggning"
-          />
-          {error && <div style={{ color: "red" }}>{error}</div>}
-
-          <button onClick={logout}>Logga ut</button>
-        </>
-      )}
+            <div className="flex justify-end sm:hidden">
+              <Dropdown />
+            </div>
 
         </header>
     )
