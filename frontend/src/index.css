@@ -32,7 +32,7 @@
     @apply rounded-[7px] px-3 py-2;
   }
   .cInput {
-    background-color: var(--theme-col);
+    background-color: var(--body-col);
     color: var(--text-col);
     @apply rounded-[5px] px-3 py-2;
   }
@@ -49,6 +49,10 @@
     background-color: var(--theme-col);
     color: var(--text-col);
     @apply rounded-[5px] px-3 py-2;
+  }
+  .auth-card {
+    background-color: var(--theme-col);
+    @apply gap-2 p-6 rounded-2xl;
   }
 }
 

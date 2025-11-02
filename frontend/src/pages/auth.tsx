@@ -3,6 +3,7 @@ import { useAuth } from "../hooks/useAuth";
 import type { IUser } from "../interfaces/interfaces";
 import CInput from "../components/Input";
 import CButton from "../components/Button";
+import FormField from "../components/formField";
 
 const Auth: React.FC = () => {
     
@@ -49,12 +50,11 @@ const Auth: React.FC = () => {
 
     
     return (
-        <>
-            <div>
-                <h2>Logga In</h2>
+        <div className="gFlexA min-h-118">
+            <div className="auth-card">
+                <h2 className="main-h3">Logga In</h2>
                 <form onSubmit={handleLoginSubmit}>
-                    <div>
-                        <label>E-post:</label>
+                    <FormField id="login-email" label="E-Post:">
                         <CInput
                             type="email"
                             id="login-email"
@@ -62,9 +62,8 @@ const Auth: React.FC = () => {
                             value={loginData.email}
                             onChange={handleLoginChange}
                         />
-                    </div>
-                    <div>
-                        <label>Lösenord:</label>
+                    </FormField>
+                    <FormField id="login-password" label="Lösenord:">
                         <CInput
                             type="password"
                             id="login-password"
@@ -72,20 +71,19 @@ const Auth: React.FC = () => {
                             value={loginData.password}
                             onChange={handleLoginChange}
                         />
-                    </div>
+                    </FormField>
                     <CButton type="submit">Logga In</CButton>
                 </form>
             </div>
             <div>
-                <p>
+                <p className="text-2xl">
                     Eller
                 </p>
             </div>
-            <div>
-                <h2>Registrera</h2>
+            <div className="auth-card">
+                <h2 className="main-h3">Registrera</h2>
                 <form onSubmit={handleRegisterSubmit}>
-                    <div>
-                        <label>Användarnamn:</label>
+                    <FormField id="register-username" label="Användarnamn:">
                         <CInput
                             type="text"
                             id="register-username"
@@ -93,9 +91,8 @@ const Auth: React.FC = () => {
                             value={registerData.username}
                             onChange={handleRegisterChange}
                         />
-                    </div>
-                    <div>
-                        <label>E-post:</label>
+                    </FormField>
+                    <FormField id="register-email" label="E-post:">
                         <CInput
                             type="email"
                             id="register-email"
@@ -103,9 +100,8 @@ const Auth: React.FC = () => {
                             value={registerData.email}
                             onChange={handleRegisterChange}
                         />
-                    </div>
-                    <div>
-                        <label>Lösenord:</label>
+                    </FormField>
+                    <FormField id="register-password" label="Lösenord:">
                         <CInput
                             type="password"
                             id="register-password"
@@ -113,11 +109,11 @@ const Auth: React.FC = () => {
                             value={registerData.password}
                             onChange={handleRegisterChange}
                         />
-                    </div>
+                    </FormField>
                     <CButton type="submit">Registrera</CButton>
                 </form>
             </div>
-        </>
+        </div>
     )
 }
 

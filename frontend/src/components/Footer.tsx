@@ -1,5 +1,6 @@
 import FooterInfo from "./FooterInfo";
 
+
 const Footer: React.FC = () => {
     return (
     <footer className="flex flex-col justify-around">
