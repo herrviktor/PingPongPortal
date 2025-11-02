@@ -54,6 +54,12 @@
     background-color: var(--theme-col);
     @apply gap-2 p-6 rounded-2xl;
   }
+  .user-span {
+    background-color: var(--body-col);
+    color: var(--text-col);
+    border: 0.2rem var(--theme-col) solid;
+    @apply py-1.5 px-3;
+  }
 }
 
 .drop-button {
