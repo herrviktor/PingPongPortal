@@ -10,6 +10,17 @@ import Index from './pages/index.tsx'
 import User from './pages/user.tsx'
 import BookingTerms from './pages/bookingTerms.tsx'
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    try {
+      const registration = await navigator.serviceWorker.register('/service-worker.js');
+      console.log('Service Worker registered:', registration);
+    } catch (error) {
+      console.log('Service Worker registration failed:', error);
+    }
+  });
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>

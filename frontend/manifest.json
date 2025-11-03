@@ -1,0 +1,21 @@
+{
+  "name": "Ping Pong Portal",
+  "short_name": "PPP",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF5E6",
+  "theme_color": "#F38D44",
+  "icons": [
+    {
+      "src": "bilder/icon-small.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "bilder/icon-big.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+
+  ]
+}
