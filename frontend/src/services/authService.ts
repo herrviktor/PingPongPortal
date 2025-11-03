@@ -1,6 +1,6 @@
 import type { IUser } from "../interfaces/interfaces";
 
-const API_BASE = "http://localhost:3000/auth";
+const API_BASE = `${import.meta.env.VITE_API_URL}/auth`;;
 
 export const register = async (userData: IUser) => {
     const res = await fetch(`${API_BASE}/register`, {
