@@ -97,6 +97,7 @@
 
 .footer-info {
   color: var(--theme-col);
+  @apply text-sm sm:text-lg xl:text-2xl;
 }
 
 :root {
