@@ -50,7 +50,7 @@ const Auth: React.FC = () => {
 
     
     return (
-        <div className="gFlexA min-h-118">
+        <div className="gFlexA flex-col md:flex-row gap-5 py-5 min-h-118">
             <div className="auth-card">
                 <h2 className="main-h3">Logga In</h2>
                 <form onSubmit={handleLoginSubmit}>
@@ -76,7 +76,7 @@ const Auth: React.FC = () => {
                 </form>
             </div>
             <div>
-                <p className="text-2xl">
+                <p className="text-xl md:text-2xl xl:text-3xl">
                     Eller
                 </p>
             </div>

@@ -102,14 +102,14 @@ const Admin: React.FC = () => {
         <div>
             <h2 className="main-h2">Admin Sida</h2>
             {error && <div className="text-red-600 font-medium text-center">{error}</div>}
-            <div className="gFlexA flex-col py-5 2xl:flex-row">
+            <div className="gFlexA flex-col py-5 gFlexRow">
                 <div>
                     <h3 className="main-h3">Användare</h3>
                     <ul className="mt-4">
                         {users.map(user => (
-                            <li key={user._id} className="gFlexS flex-col gap-1 py-4 px-2 rounded-md 2xl:flex-row">
+                            <li key={user._id} className="gFlexS flex-col gap-1 py-4 px-2 rounded-md gFlexRow">
                                 {editUser && editUser._id === user._id ? (
-                                    <form onSubmit={handleUpdate} className="gFlexA flex-col gap-1 constant">
+                                    <form onSubmit={handleUpdate} className="gFlexA flex-col gap-1 gFlexRow">
                                         <FormField id="user-username" label="Användarnamn:">
                                             <CInput
                                                 type="text"

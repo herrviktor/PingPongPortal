@@ -8,7 +8,7 @@ dotenv.config();
 export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.header('Authorization');
     if (!authHeader) {
-        return res.status(401).json({ message: 'Authorization token saknas' });
+        return res.status(401).json({ message: 'Logga in för att boka' });
     }
 
     const token = authHeader.split(' ')[1];
@@ -25,7 +25,7 @@ export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
         req.user = decoded;
         next();
     } catch (error) {
-        return res.status(401).json({ message: 'Ogiltig token' });
+        return res.status(401).json({ message: 'Ogiltig inloggning' });
     }
 };
 

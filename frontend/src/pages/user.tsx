@@ -61,9 +61,9 @@ const User: React.FC = () => {
       {bookings.map((b) => (
         <li
           key={b._id}
-          className="flex items-center justify-center gap-1 py-4 px-2 rounded-md"
+          className="flex items-center justify-center flex-col md:flex-row gap-1 py-4 px-2 rounded-md"
         >
-          <div className="flex items-center">
+          <div className="flex items-center flex-col sm:flex-row">
             <span className="user-span">{b.facility.name}</span>
             <span className="user-span">{b.date.slice(0, 10)}</span>
             <span className="user-span">kl {b.time}</span>

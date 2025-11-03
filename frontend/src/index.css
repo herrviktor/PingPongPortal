@@ -10,31 +10,8 @@
 }
 
 @layer components {
-  .header-logo {
-    font-family: 'Joti One', cursive;
-    color: var(--theme-col);
-    @apply font-extrabold pl-2;
-  }
-  .main-h2 {
-    color: var(--text-col);
-    @apply text-3xl font-bold py-5 text-center;
-  }
-  .main-h3 {
-    color: var(--text-col);
-    @apply text-xl pb-2 text-center;
-  }
   .my-text {
     @apply text-5xl text-red-900;
-  }
-  .cButton {
-    background-color: var(--button-col);
-    color: var(--body-col);
-    @apply rounded-[7px] px-3 py-2;
-  }
-  .cInput {
-    background-color: var(--body-col);
-    color: var(--text-col);
-    @apply rounded-[5px] px-3 py-2;
   }
   .gFlexB {
     @apply flex items-center justify-between;
@@ -45,25 +22,47 @@
   .gFlexA {
     @apply flex items-center justify-around;
   }
-  .index-select {
-    background-color: var(--theme-col);
-    color: var(--text-col);
-    @apply rounded-[5px] px-3 py-2;
-  }
   .auth-card {
     background-color: var(--theme-col);
     @apply gap-2 p-6 rounded-2xl;
   }
-  .user-span {
-    background-color: var(--body-col);
-    color: var(--text-col);
-    border: 0.2rem var(--theme-col) solid;
-    @apply py-1.5 px-3;
-  }
 }
 
-.constant {
-    @apply 2xl:flex-row;
+.main-h2 {
+    color: var(--text-col);
+    @apply text-3xl font-bold py-5 text-center sm:text-4xl xl:text-5xl;
+  }
+.main-h3 {
+  color: var(--text-col);
+  @apply text-xl pb-2 text-center sm:text-2xl xl:text-3xl;
+}
+
+.cButton {
+    background-color: var(--button-col);
+    color: var(--body-col);
+    @apply rounded-[7px] px-3 py-2 text-sm sm:text-lg xl:text-xl;
+  }
+
+.cInput {
+  background-color: var(--body-col);
+  color: var(--text-col);
+  @apply rounded-[5px] px-3 py-2 text-lg sm:text-xl xl:text-2xl;
+}
+
+.searchInput {
+  background-color: var(--theme-col);
+  color: var(--text-col);
+  @apply rounded-[5px] px-3 py-2 text-xs sm:text-lg xl:text-2xl;
+}
+
+.header-logo {
+    font-family: 'Joti One', cursive;
+    color: var(--theme-col);
+    @apply font-extrabold pl-2 text-xl sm:text-3xl xl:text-7xl;
+  }
+
+.gFlexRow {
+    @apply lg:text-xl 2xl:flex-row;
   }
 
 .drop-button {
@@ -71,9 +70,30 @@
     color: var(--text-col);
   }
 
+.index-select {
+    background-color: var(--body-col);
+    color: var(--text-col);
+    @apply text-sm sm:text-lg xl:text-xl rounded-[5px] px-3 py-2;
+  }
+
+.indexBookingCol {
+  @apply w-8 h-5 sm:w-11 sm:h-7 xl:w-14 xl:h-9;
+}
+
+.indexBookingText {
+  @apply text-lg sm:text-xl xl:text-2xl;
+}
+
 .index-border {
   border: 0.3rem var(--theme-col) solid;
 }
+
+.user-span {
+    background-color: var(--body-col);
+    color: var(--text-col);
+    border: 0.2rem var(--theme-col) solid;
+    @apply py-1.5 px-3 text-lg sm:text-xl xl:text-2xl;
+  }
 
 .footer-info {
   color: var(--theme-col);

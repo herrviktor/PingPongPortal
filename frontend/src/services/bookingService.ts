@@ -27,7 +27,7 @@ export const createBooking = async (facilityId: string, date: string, time: stri
   });
   const data = await res.json();
   if (!res.ok) {
-    throw new Error(data.message || "Bokningen misslyckades");
+    throw new Error(data.message || "Du måste vara inloggad för att boka");
   }
   return data;
 };
