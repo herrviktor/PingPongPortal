@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 import type { IUser } from "../interfaces/interfaces"
 import { createUser, deleteUser, getAllUsers, updateUser } from "../services/adminService";
+import FormField from "../components/formField";
+import CInput from "../components/Input";
+import CButton from "../components/Button";
 
 const Admin: React.FC = () => {
     const [users, setUsers] = useState<IUser[]>([]);
@@ -97,80 +100,94 @@ const Admin: React.FC = () => {
     
     return (
         <div>
-            <h2>Admin Sida</h2>
-            {error && <div>{error}</div>}
-            <div>
-                <h3>Användare</h3>
-                <ul>
-                    {users.map(user => (
-                        <li key={user._id}>
-                            {editUser && editUser._id === user._id ? (
-                                <form onSubmit={handleUpdate}>
-                                    <input
-                                        type="text"
-                                        name="username"
-                                        value={editUser.username}
-                                        onChange={handleEditChange}
-                                        required
-                                    />
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        value={editUser.email}
-                                        onChange={handleEditChange}
-                                        required
-                                    />
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        value={editUser.password}
-                                        onChange={handleEditChange}
-                                        required
-                                    />
-                                    <button type="submit">Spara</button>
-                                    <button type="button" onClick={() => setEditUser(null)}>Avbryt</button>
-                                </form>
-                            ) : (
-                                <>
-                                    {user.username} ({user.email})
-                                    <button onClick={() => handleEdit(user)}>Redigera</button>
-                                    <button onClick={() => handleDelete(user._id)}>Radera</button>
-                                </>
+            <h2 className="main-h2">Admin Sida</h2>
+            {error && <div className="text-red-600 font-medium text-center">{error}</div>}
+            <div className="gFlexA flex-col py-5 gFlexRow">
+                <div>
+                    <h3 className="main-h3">Användare</h3>
+                    <ul className="mt-4">
+                        {users.map(user => (
+                            <li key={user._id} className="gFlexS flex-col gap-1 py-4 px-2 rounded-md gFlexRow">
+                                {editUser && editUser._id === user._id ? (
+                                    <form onSubmit={handleUpdate} className="gFlexA flex-col gap-1 gFlexRow">
+                                        <FormField id="user-username" label="Användarnamn:">
+                                            <CInput
+                                                type="text"
+                                                id="user-username"
+                                                name="username"
+                                                value={editUser.username}
+                                                onChange={handleEditChange}
+                                            />
+                                        </FormField>
+                                        <FormField id="user-email" label="E-post:">
+                                            <CInput
+                                                type="email"
+                                                id="user-email"
+                                                name="email"
+                                                value={editUser.email}
+                                                onChange={handleEditChange}
+                                            />
+                                        </FormField>
+                                        <FormField id="user-password" label="Lösenord:">
+                                            <CInput
+                                                type="password"
+                                                id="user-password"
+                                                name="password"
+                                                value={editUser.password}
+                                                onChange={handleEditChange}
+                                            />
+                                        </FormField>
+                                        <CButton type="submit" className="mt-3 bg-green-500">Spara</CButton>
+                                        <CButton type="button" onClick={() => setEditUser(null)} className="mt-3 bg-red-500">Avbryt</CButton>
+                                    </form>
+                                ) : (
+                                    <>
+                                        <span className="user-span">{user.username}</span><span className="user-span">({user.email})</span>
+                                        <CButton onClick={() => handleEdit(user)} className="bg-yellow-600">Uppdatera</CButton>
+                                        <CButton onClick={() => handleDelete(user._id)} className="bg-red-500">Radera</CButton>
+                                    </>
 
-                            )}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div>
-                <h3>Skapa ny användare</h3>
-                <form onSubmit={handleCreate}>
-                    <input
-                        type="text"
-                        name="username"
-                        placeholder="Användarnamn"
-                        value={newUser.username}
-                        onChange={handleInputChange}
-                        required
-                    />
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="E-Post"
-                        value={newUser.email}
-                        onChange={handleInputChange}
-                        required
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Lösenord"
-                        value={newUser.password}
-                        onChange={handleInputChange}
-                        required
-                    />
-                    <button type="submit">Skapa</button>
-                </form>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div>
+                    <h3 className="main-h3">Skapa ny användare</h3>
+                    <form onSubmit={handleCreate}>
+                        <FormField id="create-username" label="Användarnamn:">
+                            <CInput
+                                type="text"
+                                id="create-username"
+                                name="username"
+                                placeholder="Ex Viktor"
+                                value={newUser.username}
+                                onChange={handleInputChange}
+                            />
+                        </FormField>
+                        <FormField id="create-email" label="E-Post:">
+                            <CInput
+                                type="email"
+                                id="create-email"
+                                name="email"
+                                placeholder="Ex mail@test.com"
+                                value={newUser.email}
+                                onChange={handleInputChange}
+                            />
+                        </FormField>
+                        <FormField id="create-password" label="Lösenord:">
+                            <CInput
+                                type="password"
+                                id="create-password"
+                                name="password"
+                                placeholder="Minst 8 tecken"
+                                value={newUser.password}
+                                onChange={handleInputChange}
+                            />
+                        </FormField>            
+                        <CButton type="submit" className="mt-3 bg-green-500">Skapa</CButton>
+                    </form>
+                </div>
             </div>
         </div>
     );

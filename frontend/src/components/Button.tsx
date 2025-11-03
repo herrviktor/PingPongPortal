@@ -9,7 +9,7 @@ interface MyButtonProps {
 }
 
 const CButton: React.FC<MyButtonProps> = ({ to, type = 'button', onClick, children, className }) => {
-  const baseClasses = "cButton hover:bg-blue-200 transition";
+  const baseClasses = "cButton hover:bg-blue transition cursor-pointer";
 
   if (to) {
     return (

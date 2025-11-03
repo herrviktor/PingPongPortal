@@ -4,8 +4,8 @@ const BookingTerms: React.FC = () => {
     return (
         <div className="gFlexS flex-col px-5 pb-5">
             <h2 className="main-h2">Bokningsvilkor</h2>
-            <div className="flex flex-wrap justify-evenly">
-                <div className="w-xs sm:w-sm md:w-md lg:w-lg xl:w-2xl">
+            <div className="flex justify-evenly flex-col lg:flex-row">
+                <div className="w-xs md:w-md xl:w-lg px-2">
                     <SectionTerms title="1. Allmänt">
                         <p>
                             Dessa bokningsvillkor gäller för all bokning av bordtennispass 
@@ -36,7 +36,7 @@ const BookingTerms: React.FC = () => {
                         ]}
                     />
                 </div>
-                <div className="w-xs sm:w-sm md:w-md lg:w-lg xl:w-2xl">
+                <div className="w-xs md:w-md xl:w-lg px-2">
                     <SectionTerms
                         title="5. Ansvar"
                         listItems={[

@@ -4,7 +4,6 @@ import { searchFacilities } from "../services/facilityService";
 import { useState } from "react";
 import type { ISearchFacility } from "../interfaces/interfaces";
 import CButton from "./Button";
-import CInput from "./Input";
 import Dropdown from "./DropDown";
 
 interface HeaderProps {
@@ -26,10 +25,10 @@ const Header = ({ onSearchResults }: HeaderProps) => {
    try {
      if (val.length > 2) {
        const data = await searchFacilities(val);
-       console.log("Header: sökresultat:", data);   // <-- här
+       console.log("Header: sökresultat:", data);
        onSearchResults(data);
      } else {
-       console.log("Header: tömmer sökresultat");    // <-- här
+       console.log("Header: tömmer sökresultat");
        onSearchResults(null);
      }
    } catch (err) {
@@ -39,7 +38,7 @@ const Header = ({ onSearchResults }: HeaderProps) => {
         else {
             setError("Ett okänt fel inträffade");
         }
-        console.log("Header: sökfel, tömmer resultat"); // <-- här
+        console.log("Header: sökfel, tömmer resultat");
         onSearchResults(null);
   }
 };
@@ -47,25 +46,21 @@ const Header = ({ onSearchResults }: HeaderProps) => {
 
     return (
         <header>
-            <div className="gFlexB px-4">
-              <div className="gFlexS">
-                <img src="../../public/bilder/icon.png" className="w-9 h-9" />
+            <div className="gFlexB pt-3 mb-3">
+              <div className="gFlexS pl-3">
+                <img src="../../public/bilder/icon.png" className="w-5 h-auto sm:w-7 xl:w-15" />
                 <h1 className="header-logo">PingPongPortal</h1>
               </div>
-              {user && (
-                <div>
-                  <CInput
-                    type="text"
-                    placeholder="Sök anläggning..."
-                    value={query}
-                    onChange={onSearchChange}
-                    ariaLabel="Sök anläggning"
-                  />
-
-                  {error && <div style={{ color: "red" }}>{error}</div>}
-
-                </div>
-              )}
+              <div className="pr-0.5">
+                <input 
+                  type="text"
+                  placeholder="Sök Pingishall..."
+                  value={query}
+                  onChange={onSearchChange}
+                  className="searchInput"
+                />
+                {error && <div style={{ color: "red" }}>{error}</div>}
+              </div>
             </div>
             <nav className="">
                 <ul className="hidden sm:flex justify-around items-center my-4">

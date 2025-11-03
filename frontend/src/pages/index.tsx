@@ -93,11 +93,11 @@ const Index: React.FC = () => {
   const optionsToShow = searchResults ?? facilities;
 
     return (
-        <div className="gFlexS flex-col">
+        <div className="gFlexS flex-col pb-4">
             <h2 className="main-h2">Hitta tider</h2>
             {error && <p style={{ color: "red" }}>{error}</p>}
             
-            <div className="gFlexA w-full flex-col md:flex-row">
+            <div className="gFlexA w-full gap-5 flex-col md:flex-row">
                 <div>
                     <h3 className="main-h3">Välj Pingishall</h3>
                     <select
@@ -117,6 +117,11 @@ const Index: React.FC = () => {
                         Ingen pingishall matchades sökresultatet
                     </div>
                     )}
+                    {searchResults && searchResults.length > 0 && (
+                    <div style={{ color: "green", marginTop: "0.5rem" }}>
+                        din sökning matchade med ovan pingshallar
+                    </div>
+                    )}
                     <h3 className="main-h3 mt-5">Välj datum</h3>
                     <CInput
                             type="date"
@@ -125,35 +130,35 @@ const Index: React.FC = () => {
                         />
                 </div>
                 <div>
-                <h3 className="main-h3 mb-1">Tider att boka</h3>
-                <div className="flex border-t border-x index-border px-2 py-2">
-                    <div className="gFlexS w-full gap-1">
-                        <div className="w-8 h-5 bg-green-600"></div>
-                        <span>Bokningsbar</span>
+                    <h3 className="main-h3 mb-1">Tider att boka</h3>
+                    <div className="flex border-t border-x index-border px-2 py-2">
+                        <div className="gFlexS w-full gap-1">
+                            <div className="indexBookingCol bg-green-600"></div>
+                            <span className="indexBookingText">Bokningsbar</span>
+                        </div>
+                        <div className="gFlexS w-full gap-1">
+                            <div className="indexBookingCol bg-red-500"></div>
+                            <span className="indexBookingText">Ej Bokningsbar</span>
+                        </div>
                     </div>
-                    <div className="flex w-full gap-1">
-                        <div className="w-8 h-5 bg-red-500"></div>
-                        <span>Ej Bokningsbar</span>
-                    </div>
-                </div>
-                <p className="my-0 border-5 border-[#F38D44]">
-                    Klicka på en av de bokningsbara tiderna för att boka tiden.<br/>
-                    Klicka sedan på knappen "mina bokade tider" för att komma till<br/>
-                    din sida med det bokade tiderna.
-                </p>
-                <ul className="grid grid-cols-3 md:grid-cols-4 gap-2 border index-border rounded px-2 py-2 mt-0">
-                    {timeslots.map((t, i) => (
-                    <li
-                        key={i}
-                        onClick={() => !t.isBooked && handleBooking(t.time)}
-                        style={{ cursor: t.isBooked ? "not-allowed" : "pointer" }}
-                        className={`bg-green-600 p-2 border index-border ${t.isBooked ? "bg-red-500 cursor-not-allowed" : "hover:bg-gray-100"} cursor-pointer`}
-                    >
-                        {t.isBooked ? "Bokad" : t.time}
-                    </li>
-                    ))}
-                </ul>
-                {bookingMessage && <p className="mt-4 text-lg text-green-700">{bookingMessage}</p>}
+                    <p className="text-sm sm:text-lg xl:text-2xl my-0 border-5 border-[#F38D44]">
+                        Klicka på en av de bokningsbara tiderna för att boka<br/>
+                        tiden. Klicka sedan på knappen "mina bokade tider"<br/>
+                        för att komma till din sida med det bokade tiderna.
+                    </p>
+                    <ul className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 border index-border rounded px-2 py-2 mt-0">
+                        {timeslots.map((t, i) => (
+                        <li
+                            key={i}
+                            onClick={() => !t.isBooked && handleBooking(t.time)}
+                            style={{ cursor: t.isBooked ? "not-allowed" : "pointer" }}
+                            className={`text-lg sm:text-xl xl:text-2xl bg-green-600 p-2 border index-border ${t.isBooked ? "bg-red-500 cursor-not-allowed" : "hover:bg-gray-100"} cursor-pointer`}
+                        >
+                            {t.isBooked ? "Bokad" : t.time}
+                        </li>
+                        ))}
+                    </ul>
+                    {bookingMessage && <p className="mt-4 text-lg text-green-700">{bookingMessage}</p>}
                 </div>
             </div>
         </div>
