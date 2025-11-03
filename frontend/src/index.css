@@ -1,7 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Joti+One&display=swap');
 @import "tailwindcss";
 
-.my-text {
-  @apply text-5xl text-red-900;
+@theme {
+  --body-col: #FFF5E6;
+  --main-col: #F4A16A;
+  --text-col: #333333;
+  --button-col: #003366;
+  --theme-col: #F38D44;
+}
+
+@layer components {
+  .my-text {
+    @apply text-5xl text-red-900;
+  }
+  .gFlexB {
+    @apply flex items-center justify-between;
+  }
+  .gFlexS {
+    @apply flex items-center justify-start;
+  }
+  .gFlexA {
+    @apply flex items-center justify-around;
+  }
+  .auth-card {
+    background-color: var(--theme-col);
+    @apply gap-2 p-6 rounded-2xl;
+  }
+}
+
+.main-h2 {
+    color: var(--text-col);
+    @apply text-3xl font-bold py-5 text-center sm:text-4xl xl:text-5xl;
+  }
+.main-h3 {
+  color: var(--text-col);
+  @apply text-xl pb-2 text-center sm:text-2xl xl:text-3xl;
+}
+
+.cButton {
+    background-color: var(--button-col);
+    color: var(--body-col);
+    @apply rounded-[7px] px-3 py-2 text-sm sm:text-lg xl:text-xl;
+  }
+
+.cInput {
+  background-color: var(--body-col);
+  color: var(--text-col);
+  @apply rounded-[5px] px-3 py-2 text-lg sm:text-xl xl:text-2xl;
+}
+
+.searchInput {
+  background-color: var(--theme-col);
+  color: var(--text-col);
+  @apply rounded-[5px] px-3 py-2 text-xs sm:text-lg xl:text-2xl;
+}
+
+.header-logo {
+    font-family: 'Joti One', cursive;
+    color: var(--theme-col);
+    @apply font-extrabold pl-2 text-xl sm:text-3xl xl:text-7xl;
+  }
+
+.gFlexRow {
+    @apply lg:text-xl 2xl:flex-row;
+  }
+
+.drop-button {
+    background-color: var(--theme-col);
+    color: var(--text-col);
+  }
+
+.index-select {
+    background-color: var(--body-col);
+    color: var(--text-col);
+    @apply text-sm sm:text-lg xl:text-xl rounded-[5px] px-3 py-2;
+  }
+
+.indexBookingCol {
+  @apply w-8 h-5 sm:w-11 sm:h-7 xl:w-14 xl:h-9;
+}
+
+.indexBookingText {
+  @apply text-lg sm:text-xl xl:text-2xl;
+}
+
+.index-border {
+  border: 0.3rem var(--theme-col) solid;
+}
+
+.user-span {
+    background-color: var(--body-col);
+    color: var(--text-col);
+    border: 0.2rem var(--theme-col) solid;
+    @apply py-1.5 px-3 text-lg sm:text-xl xl:text-2xl;
+  }
+
+.footer-info {
+  color: var(--theme-col);
+  @apply text-sm sm:text-lg xl:text-2xl;
 }
 
 :root {
@@ -19,19 +115,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  
   min-width: 320px;
   min-height: 100vh;
 }
@@ -41,38 +127,16 @@ h1 {
   line-height: 1.1;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
 
-input {
-  background-color: rgb(171, 231, 171);
-}
+
+
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: #333333;
     background-color: #ffffff;
   }
   a:hover {
     color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
   }
 }
