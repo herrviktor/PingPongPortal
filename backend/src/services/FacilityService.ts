@@ -1,4 +1,5 @@
 import FacilityModel from "../models/FacilityModel"
+import { sanitizeRegex } from "../validators/validators";
 
 const getFacilityById = async (id: string) => {
     const facility = await FacilityModel.findById(id);
@@ -39,14 +40,18 @@ const getTimeslotsForDate = async (id: string, date: Date) => {
 };
 
 const searchFacilities = async (query: string) => {
-    if (!query || typeof query !== 'string') {
-        throw new Error('Sökfråga saknas eller är ogiltig');
-    }
-    const regex = new RegExp(query, 'i');
-    const facilities = await FacilityModel.find({
-        $or: [{ name: regex }, { locations: regex }]
-    }).limit(10);
-    return facilities;
+  if (!query || typeof query !== 'string') {
+    throw new Error('Sökfråga saknas eller är ogiltig');
+  }
+  if (query.length > 50) {
+    throw new Error('Sökfrågan får vara högst 50 tecken');
+  }
+  const cleanQuery = sanitizeRegex(query.trim());
+  const regex = new RegExp(cleanQuery, 'i');
+  const facilities = await FacilityModel.find({
+    $or: [{ name: regex }, { locations: regex }]
+  }).limit(10);
+  return facilities;
 };
 
 

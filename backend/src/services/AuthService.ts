@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { IUserRegister } from "../interfaces/interfaces";
+import { sanitize, validateEmail, validatePassword, validateUsername } from "../validators/validators";
 
 dotenv.config();
 
@@ -12,14 +13,19 @@ if (!JWT_SECRET) {
 }
 
 const register = async (data: IUserRegister) => {
-    if (data.username.length > 20) {
-        throw new Error("Användarnamnet får högst vara 20 tecken");
+    if (!validateUsername(data.username)) {
+        throw new Error("Ogiltigt användarnamn. 3-20 tecken, bara bokstäver, siffror eller understreck");
     }
-    if (data.password.length < 8) {
-        throw new Error("Lösenordet måste vara minst 8 tecken");
+    if (!validateEmail(data.email)) {
+        throw new Error("Ogiltig e-postadress");
     }
+    if (!validatePassword(data.password)) {
+        throw new Error("Lösenordet måste vara minst 8 tecken och högst 30");
+    }
+    const cleanUsername = sanitize(data.username);
+    const cleanEmail = sanitize(data.email);
     const existingUser = await UserModel.findOne({
-        $or: [{ email: data.email }, { username: data.username }]
+        $or: [{ email: cleanEmail }, { username: cleanUsername }]
     });
     if (existingUser) {
         if (existingUser.email === data.email) throw new Error('Emailen används redan på sidan');
@@ -28,8 +34,8 @@ const register = async (data: IUserRegister) => {
 
     const hashedPassword = await bcrypt.hash(data.password, 10);
     const user = new UserModel({
-        username: data.username,
-        email: data.email,
+        username: cleanUsername,
+        email: cleanEmail,
         password: hashedPassword
     });
 
@@ -37,7 +43,14 @@ const register = async (data: IUserRegister) => {
 };
 
 const login = async (email: string, password: string) => {
-    const user = await UserModel.findOne({ email });
+    if (!validateEmail(email)) {
+        throw new Error('Felaktigt format på e-postadress');
+    }
+    if (typeof password !== 'string' || password.length === 0) {
+        throw new Error('Felaktigt format på lösenord');
+    }
+    const cleanEmail = sanitize(email);
+    const user = await UserModel.findOne({ email: cleanEmail });
     if (!user) throw new Error('Felaktigt användarnamn eller lösenord');
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
