@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { IUserRegister } from "../interfaces/interfaces";
-import { sanitize, validateEmail, validatePassword, validateUsername } from "../validators/validators";
+import { sanitize, validateEmail, validatePassword, validateUsername } from "../utils/validators";
 
 dotenv.config();
 
@@ -58,7 +58,7 @@ const login = async (email: string, password: string) => {
 
     const token = jwt.sign({ id: user._id, email: user.email, isAdmin: user.isAdmin }, JWT_SECRET, { expiresIn: '24h' });
 
-    return { token, user: { id: user._id, username: user.username, email: user.email } };
+    return { token, user: { id: user._id, username: user.username, email: user.email, isAdmin: user.isAdmin } };
 };
 
 export default {

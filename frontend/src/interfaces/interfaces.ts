@@ -2,7 +2,13 @@ import type {ReactNode} from 'react'
 
 export interface IUser {
     _id?: string;
-    username?: string;
+    username: string;
+    email: string;
+    password: string;
+    isAdmin?: boolean;
+}
+
+export interface ILogin {
     email: string;
     password: string;
 }
@@ -52,4 +58,11 @@ export interface IBooking {
 export interface ISearchFacility {
   _id: string;
   name: string;
+}
+
+export interface IFormErrors {
+  email?: string;
+  password?: string;
+  username?: string;
+  general?: string;
 }

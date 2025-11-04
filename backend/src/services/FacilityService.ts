@@ -1,5 +1,5 @@
 import FacilityModel from "../models/FacilityModel"
-import { sanitizeRegex } from "../validators/validators";
+import { sanitizeRegex } from "../utils/validators";
 
 const getFacilityById = async (id: string) => {
     const facility = await FacilityModel.findById(id);

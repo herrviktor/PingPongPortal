@@ -1,7 +1,7 @@
 import { IUpdateUser } from "../interfaces/interfaces";
 import bcrypt from "bcrypt";
 import UserModel from "../models/UserModel";
-import { sanitize, validateEmail, validatePassword, validateUsername } from "../validators/validators";
+import { sanitize, validateEmail, validatePassword, validateUsername } from "../utils/validators";
 
 const getAllUsers = async () => {
     return UserModel.find({});

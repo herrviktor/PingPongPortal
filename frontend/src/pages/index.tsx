@@ -4,6 +4,8 @@ import { getAllFacilities, getTimeslotsForDate } from "../services/facilityServi
 import { createBooking } from "../services/bookingService";
 import { useOutletContext } from "react-router-dom";
 import CInput from "../components/Input";
+import CButton from "../components/Button";
+import { useAuth } from "../hooks/useAuth";
 
 interface OutletContext {
   searchResults: Pick<ISearchFacility, "_id" | "name">[] | null;
@@ -17,6 +19,7 @@ const Index: React.FC = () => {
     const [timeslots, setTimeslots] = useState<ITimeslot[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [bookingMessage, setBookingMessage] = useState<string | null>(null);
+    const { user } = useAuth();
     
     const { searchResults } = useOutletContext<OutletContext>();
     console.log("Index: sökresultat från outlet context:", searchResults);
@@ -122,7 +125,7 @@ const Index: React.FC = () => {
                         din sökning matchade med ovan pingshallar
                     </div>
                     )}
-                    <h3 className="main-h3 mt-5">Välj datum</h3>
+                    <h3 className="main-h3 mt-5">Välj datum (inom en vecka)</h3>
                     <CInput
                             type="date"
                             value={date}
@@ -146,19 +149,27 @@ const Index: React.FC = () => {
                         tiden. Klicka sedan på knappen "mina bokade tider"<br/>
                         för att komma till din sida med det bokade tiderna.
                     </p>
-                    <ul className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 border index-border rounded px-2 py-2 mt-0">
-                        {timeslots.map((t, i) => (
-                        <li
-                            key={i}
-                            onClick={() => !t.isBooked && handleBooking(t.time)}
-                            style={{ cursor: t.isBooked ? "not-allowed" : "pointer" }}
-                            className={`text-lg sm:text-xl xl:text-2xl bg-green-600 p-2 border index-border ${t.isBooked ? "bg-red-500 cursor-not-allowed" : "hover:bg-gray-100"} cursor-pointer`}
-                        >
-                            {t.isBooked ? "Bokad" : t.time}
-                        </li>
-                        ))}
-                    </ul>
-                    {bookingMessage && <p className="mt-4 text-lg text-green-700">{bookingMessage}</p>}
+                    {timeslots.length > 0 ? (
+                        <ul className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 border index-border rounded px-2 py-2 mt-0 mb-4">
+                            {timeslots.map((t, i) => (
+                            <li
+                                key={i}
+                                onClick={() => !t.isBooked && handleBooking(t.time)}
+                                style={{ cursor: t.isBooked ? "not-allowed" : "pointer" }}
+                                className={`text-lg sm:text-xl xl:text-2xl bg-green-600 p-2 border index-border ${t.isBooked ? "bg-red-500 cursor-not-allowed" : "hover:bg-gray-100"} cursor-pointer`}
+                            >
+                                {t.isBooked ? "Bokad" : t.time}
+                            </li>
+                            ))}
+                        </ul>
+                         ) : <p className="index-border indexBookingText rounded px-2 py-2 mt-0 mb-4 text-red-600">Finns inga tider för detta datum</p>
+                    }
+                    {bookingMessage && 
+                        <p className="mt-4 mb-4 text-xl text-gray-700">{bookingMessage}</p>
+                    }
+                    {user &&
+                        <CButton to="/user" className="mt-4">Se dina tider</CButton>
+                    }
                 </div>
             </div>
         </div>

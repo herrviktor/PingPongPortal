@@ -6,7 +6,7 @@ import CDropButton from "./DropButton";
 const Dropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { user, logout } = useAuth(); // Glöm inte parenteserna när du anropar hooken
+  const { user, logout } = useAuth();
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -42,21 +42,23 @@ const Dropdown = () => {
                 Hem
             </CDropButton>
           </li>
+          <li>
+              <CDropButton onClick={() => { navigate("/booking-terms"); setIsOpen(false); }}>
+                  Bokningsvilkor
+              </CDropButton>
+          </li>
+          {user && (           
+              <li>
+                <CDropButton onClick={() => { navigate("/admin"); setIsOpen(false); }}>
+                      Admin
+                  </CDropButton>
+              </li>            
+          )}
           {user && (
             <>
               <li>
                 <CDropButton onClick={() => { navigate("/user"); setIsOpen(false); }}>
                     Min Sida
-                </CDropButton>
-              </li>
-              <li>
-                <CDropButton onClick={() => { navigate("/admin"); setIsOpen(false); }}>
-                    Admin
-                </CDropButton>
-              </li>
-              <li>
-                <CDropButton onClick={() => { navigate("/booking-terms"); setIsOpen(false); }}>
-                    Bokningsvilkor
                 </CDropButton>
               </li>
               <li>
@@ -67,11 +69,13 @@ const Dropdown = () => {
             </>
           )}
           {!user && (
-            <li>
-              <CDropButton onClick={() => { navigate("/auth"); setIsOpen(false); }}>
-                    Logga in/Registrera
-                </CDropButton>
-            </li>
+            <>
+              <li>
+                <CDropButton onClick={() => { navigate("/auth"); setIsOpen(false); }}>
+                      Logga in/Registrera
+                  </CDropButton>
+              </li>
+            </>
           )}
         </ul>
       )}

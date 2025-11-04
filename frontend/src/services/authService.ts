@@ -1,4 +1,4 @@
-import type { IUser } from "../interfaces/interfaces";
+import type { ILogin, IUser } from "../interfaces/interfaces";
 
 const API_BASE = `${import.meta.env.VITE_API_URL}/auth`;;
 
@@ -15,7 +15,7 @@ export const register = async (userData: IUser) => {
     return res.json();
 };
 
-export const login = async (credentials: IUser) => {
+export const login = async (credentials: ILogin) => {
     const res = await fetch(`${API_BASE}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

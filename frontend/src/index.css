@@ -61,6 +61,11 @@
     @apply font-extrabold pl-2 text-xl sm:text-3xl xl:text-7xl;
   }
 
+.header-sub {
+    color: var(--theme-col);
+    @apply italic text-xs sm:text-lg xl:text-4xl;
+}
+
 .gFlexRow {
     @apply lg:text-xl 2xl:flex-row;
   }

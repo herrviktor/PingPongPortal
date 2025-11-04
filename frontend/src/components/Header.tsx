@@ -47,9 +47,12 @@ const Header = ({ onSearchResults }: HeaderProps) => {
     return (
         <header>
             <div className="gFlexB pt-3 mb-3">
-              <div className="gFlexS pl-3">
-                <img src="/bilder/icon.png" className="w-5 h-auto sm:w-7 xl:w-15" />
-                <h1 className="header-logo">PingPongPortal</h1>
+              <div className="gFlexS flex-col">
+                <div className="gFlexS pl-3">
+                  <img src="/bilder/icon.png" className="w-5 h-auto sm:w-7 xl:w-15" />
+                  <h1 className="header-logo">PingPongPortal</h1>
+                </div>
+                <p className="header-sub">En bokningssida för pingis entuiaster</p>
               </div>
               <div className="pr-0.5">
                 <input 
@@ -63,13 +66,17 @@ const Header = ({ onSearchResults }: HeaderProps) => {
               </div>
             </div>
             <nav className="">
-                <ul className="hidden sm:flex justify-around items-center my-4">
+                <ul className="hidden sm:flex justify-around items-center mt-6 mb-4">
                     <li><CButton to="/">Hem</CButton></li>
-                    {user && <li><CButton to="/user">Min sida</CButton></li>}
-                    {user && <li><CButton to="/admin">Admin</CButton></li>}
                     <li><CButton to="/booking-terms">Bokningsvilkor</CButton></li>
-                    {!user && <li><CButton to="/auth">Register/LoggaIn</CButton></li>}
-                    {user && <li><CButton onClick={logout}>Logga ut</CButton></li>}
+                    {user?.isAdmin && <li><CButton to="/admin">Admin</CButton></li>}
+                    {user && (
+                      <>
+                        <li><CButton to="/user">Min sida</CButton></li>
+                        <li><CButton onClick={logout}>Logga ut</CButton></li>
+                      </>
+                    )}
+                    {!user && <li><CButton to="/auth">LoggaIn/Registrera</CButton></li>}
                 </ul>
             </nav>
             <div className="flex justify-end sm:hidden">
