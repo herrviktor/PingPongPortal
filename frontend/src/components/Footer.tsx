@@ -1,4 +1,4 @@
-import FooterInfo from "./footerInfo";
+import FooterInfo from "./FooterInfo";
 
 
 const Footer: React.FC = () => {
