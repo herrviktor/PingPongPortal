@@ -48,7 +48,7 @@ const Header = ({ onSearchResults }: HeaderProps) => {
         <header>
             <div className="gFlexB pt-3 mb-3">
               <div className="gFlexS pl-3">
-                <img src="../../public/bilder/icon.png" className="w-5 h-auto sm:w-7 xl:w-15" />
+                <img src="/bilder/icon.png" className="w-5 h-auto sm:w-7 xl:w-15" />
                 <h1 className="header-logo">PingPongPortal</h1>
               </div>
               <div className="pr-0.5">
