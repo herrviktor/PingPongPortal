@@ -7,74 +7,79 @@ import CButton from "./Button";
 import Dropdown from "./DropDown";
 
 interface HeaderProps {
-  onSearchResults: (results: ISearchFacility[] | null) => void;
+    onSearchResults: (results: ISearchFacility[] | null) => void;
 };
 
 const Header = ({ onSearchResults }: HeaderProps) => {
 
-    const {logout, user} = useAuth();
+    const { logout, user } = useAuth();
     const [query, setQuery] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-  const onSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-   const val = e.target.value;
-   setQuery(val);
-   setError("");
-   navigate("/")
-   try {
-     if (val.length > 2) {
-       const data = await searchFacilities(val);
-       console.log("Header: sökresultat:", data);
-       onSearchResults(data);
-     } else {
-       console.log("Header: tömmer sökresultat");
-       onSearchResults(null);
-     }
-   } catch (err) {
-        if (err instanceof Error) {
-            setError(err.message || "Fel vid sökning");;
-        }
-        else {
-            setError("Ett okänt fel inträffade");
-        }
-        console.log("Header: sökfel, tömmer resultat");
+    const handleSearchClick = async () => {
+    setError("");
+    try {
+      if (query.length > 0) {
+        const data = await searchFacilities(query);
+        onSearchResults(data);
+      } else {
         onSearchResults(null);
-  }
-};
+      }
+      navigate("/");
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message || "Fel vid sökning");
+      } else {
+        setError("Ett okänt fel inträffade");
+      }
+      onSearchResults(null);
+    }
+  };
 
 
     return (
         <header>
             <div className="gFlexB pt-3 mb-3">
-              <div className="gFlexS pl-3">
-                <img src="/bilder/icon.png" className="w-5 h-auto sm:w-7 xl:w-15" />
-                <h1 className="header-logo">PingPongPortal</h1>
-              </div>
-              <div className="pr-0.5">
-                <input 
-                  type="text"
-                  placeholder="Sök Pingishall..."
-                  value={query}
-                  onChange={onSearchChange}
-                  className="searchInput"
-                />
-                {error && <div style={{ color: "red" }}>{error}</div>}
-              </div>
+                <div className="gFlexS flex-col">
+                    <div className="gFlexS pl-3">
+                        <img src="/bilder/icon.png" className="w-5 h-auto sm:w-7 xl:w-15" />
+                        <h1 className="header-logo">PingPongPortal</h1>
+                    </div>
+                    <p className="header-sub">En bokningssida för pingis entuiaster</p>
+                </div>
+                <div className="pr-0.5">
+                    <input
+                        type="text"
+                        placeholder="Sök Pingishall..."
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        className="searchInput"
+                    />
+                    <CButton onClick={handleSearchClick}>Sök</CButton>
+                    {error && <div style={{ color: "red" }}>{error}</div>}
+                </div>
             </div>
             <nav className="">
-                <ul className="hidden sm:flex justify-around items-center my-4">
+                <ul className="hidden sm:flex justify-around items-center mt-6 mb-4">
                     <li><CButton to="/">Hem</CButton></li>
-                    {user && <li><CButton to="/user">Min sida</CButton></li>}
-                    {user && <li><CButton to="/admin">Admin</CButton></li>}
                     <li><CButton to="/booking-terms">Bokningsvilkor</CButton></li>
-                    {!user && <li><CButton to="/auth">Register/LoggaIn</CButton></li>}
-                    {user && <li><CButton onClick={logout}>Logga ut</CButton></li>}
+                    {user?.isAdmin && <li><CButton to="/admin">Admin</CButton></li>}
+                    {user && (
+                        <>
+                            <li><CButton to="/user">Min sida</CButton></li>
+                            <li><CButton onClick={logout}>Logga ut</CButton></li>
+                        </>
+                    )}
+                    {!user && <li><CButton to="/auth">LoggaIn/Registrera</CButton></li>}
                 </ul>
             </nav>
             <div className="flex justify-end sm:hidden">
-              <Dropdown />
+                <Dropdown />
             </div>
+            {user &&
+                <p className="text-green-500 text-xs sm:text-sm xl:text-lg">Inloggad som: {user.username}</p>
+            }
 
         </header>
     )

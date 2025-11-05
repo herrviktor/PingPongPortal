@@ -15,10 +15,10 @@ const getAllUsers = async (req: Request, res: Response) => {
 const createUser = async (req: Request, res: Response) => {
     try {
         const user = await AuthService.register(req.body);
-        res.status(201).json({ message: 'Användare skapad', user});
+        res.status(201).json({ message: 'Användare skapad', user });
     } catch (error) {
         console.error("Fel vid skapandet av användare:", error);
-        res.status(409).json({ message: (error as Error).message});
+        res.status(409).json({ message: (error as Error).message });
     }
 };
 
@@ -31,7 +31,7 @@ const updateUser = async (req: Request, res: Response) => {
         res.json({ message: 'Användare uppdaterad', user });
     } catch (error) {
         console.error("Fel vid uppdaterande av användare:", error);
-        res.status(400).json({ message: (error as Error).message})
+        res.status(400).json({ message: (error as Error).message })
     }
 };
 

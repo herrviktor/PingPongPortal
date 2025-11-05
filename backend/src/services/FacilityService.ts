@@ -1,4 +1,5 @@
 import FacilityModel from "../models/FacilityModel"
+import { sanitizeRegex } from "../utils/validators";
 
 const getFacilityById = async (id: string) => {
     const facility = await FacilityModel.findById(id);
@@ -17,11 +18,11 @@ const getFirstFacility = async () => {
 };
 
 const getAllFacilities = async () => {
-  const facilities = await FacilityModel.find({}, 'name');
-  if (!facilities) {
-    throw new Error("Inga sporthallar hittades");
-  }
-  return facilities;
+    const facilities = await FacilityModel.find({}, 'name');
+    if (!facilities) {
+        throw new Error("Inga sporthallar hittades");
+    }
+    return facilities;
 };
 
 const getTimeslotsForDate = async (id: string, date: Date) => {
@@ -30,8 +31,8 @@ const getTimeslotsForDate = async (id: string, date: Date) => {
         throw new Error("Sporthallen hittades ej");
     }
 
-    const dateObj = facility.availableDates.find( 
-        d => d.date.toISOString().slice(0,10) === date.toISOString().slice(0,10)
+    const dateObj = facility.availableDates.find(
+        d => d.date.toISOString().slice(0, 10) === date.toISOString().slice(0, 10)
     );
     if (!dateObj) return [];
 
@@ -42,7 +43,11 @@ const searchFacilities = async (query: string) => {
     if (!query || typeof query !== 'string') {
         throw new Error('Sökfråga saknas eller är ogiltig');
     }
-    const regex = new RegExp(query, 'i');
+    if (query.length > 50) {
+        throw new Error('Sökfrågan får vara högst 50 tecken');
+    }
+    const cleanQuery = sanitizeRegex(query.trim());
+    const regex = new RegExp(cleanQuery, 'i');
     const facilities = await FacilityModel.find({
         $or: [{ name: regex }, { locations: regex }]
     }).limit(10);

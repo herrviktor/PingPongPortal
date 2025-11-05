@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import FacilityService from "../services/FacilityService";
 
-const getFacility = async  (req: Request, res: Response) => {
+const getFacility = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         const facility = id ? await FacilityService.getFacilityById(id) : await FacilityService.getFirstFacility();
         res.json(facility);
     } catch (error) {
-        res.status(404).json({ message: (error as Error).message});
+        res.status(404).json({ message: (error as Error).message });
     }
 };
 
@@ -16,7 +16,7 @@ const getAllFacilities = async (req: Request, res: Response) => {
         const facilities = await FacilityService.getAllFacilities();
         res.json(facilities);
     } catch (error) {
-        res.status(404).json({ message: (error as Error).message});
+        res.status(404).json({ message: (error as Error).message });
     }
 };
 

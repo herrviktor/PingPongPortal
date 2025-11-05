@@ -38,7 +38,7 @@ export const getTimeslotsForDate = async (facilityId: string, date: string): Pro
 };
 
 export const searchFacilities = async (query: string) => {
-    if (query.length < 3) {
+    if (query.length < 1) {
         return [];
     }
     const res = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}`, {
