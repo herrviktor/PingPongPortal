@@ -7,10 +7,10 @@ import CButton from "../components/Button";
 
 const Admin: React.FC = () => {
     const [users, setUsers] = useState<IUser[]>([]);
-    const [newUser, setNewUser] = useState<IUser>({ 
-        username: "", 
-        email: "", 
-        password: "" 
+    const [newUser, setNewUser] = useState<IUser>({
+        username: "",
+        email: "",
+        password: ""
     });
     const [editUser, setEditUser] = useState<IUser | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -97,7 +97,7 @@ const Admin: React.FC = () => {
         }
     };
 
-    
+
     return (
         <div>
             <h2 className="main-h2">Admin Sida</h2>
@@ -184,7 +184,7 @@ const Admin: React.FC = () => {
                                 value={newUser.password}
                                 onChange={handleInputChange}
                             />
-                        </FormField>            
+                        </FormField>
                         <CButton type="submit" className="mt-3 bg-green-500">Skapa</CButton>
                     </form>
                 </div>

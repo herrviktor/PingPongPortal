@@ -13,24 +13,24 @@ export interface IUpdateUser {
 }
 
 export interface IBookingInput {
-  facilityId: string;
-  date: Date;
-  time: string;
-  userId: string;
+    facilityId: string;
+    date: Date;
+    time: string;
+    userId: string;
 }
 
 export interface IJwtPayload {
-  id: string;
-  email: string;
-  isAdmin?: boolean;
+    id: string;
+    email: string;
+    isAdmin?: boolean;
 }
 
 declare global {
-  namespace Express {
-    interface Request {
-      user: IJwtPayload;
+    namespace Express {
+        interface Request {
+            user: IJwtPayload;
+        }
     }
-  }
 }
 
-export {};
+export { };

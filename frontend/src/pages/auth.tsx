@@ -8,10 +8,10 @@ import { sanitize, validateEmail, validatePassword, validateUsername } from "../
 import { useNavigate } from "react-router-dom";
 
 const Auth: React.FC = () => {
-    
+
     const { login, register } = useAuth();
 
-    const [loginData, setLoginData] = useState<{email: string; password: string}>({
+    const [loginData, setLoginData] = useState<{ email: string; password: string }>({
         email: "",
         password: "",
     });
@@ -37,51 +37,51 @@ const Auth: React.FC = () => {
     };
 
     const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
-    const newErrors: IFormErrors = {};
-    if (!validateEmail(loginData.email)) newErrors.email = "Ogiltig e-postadress";
-    if (!loginData.password || loginData.password.length < 1) newErrors.password = "Ange lösenord";
-    if (Object.keys(newErrors).length > 0) {
-      setLoginErrors(newErrors);
-      return;
-    }
-    try {
-      const response = await login(loginData.email, loginData.password);
-      console.log("Inloggad", response);
-      setLoginErrors({});
-      navigate("/");
-    } catch (error) {
-      console.error("Login misslyckades", error);
-    }
-  };
+        e.preventDefault();
+        const newErrors: IFormErrors = {};
+        if (!validateEmail(loginData.email)) newErrors.email = "Ogiltig e-postadress";
+        if (!loginData.password || loginData.password.length < 1) newErrors.password = "Ange lösenord";
+        if (Object.keys(newErrors).length > 0) {
+            setLoginErrors(newErrors);
+            return;
+        }
+        try {
+            const response = await login(loginData.email, loginData.password);
+            console.log("Inloggad", response);
+            setLoginErrors({});
+            navigate("/");
+        } catch (error) {
+            console.error("Login misslyckades", error);
+        }
+    };
 
     const handleRegisterSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
 
         const newErrors: IFormErrors = {};
         if (!validateUsername(registerData.username))
-        newErrors.username = "3–20 tecken, endast bokstäver, siffror eller _";
+            newErrors.username = "3-20 tecken, endast bokstäver, siffror eller _";
         if (!validateEmail(registerData.email))
-        newErrors.email = "Ogiltig e-postadress";
+            newErrors.email = "Ogiltig e-postadress";
         if (!validatePassword(registerData.password))
-        newErrors.password = "Lösenordet måste vara 8–30 tecken";
+            newErrors.password = "Lösenordet måste vara 8-30 tecken";
 
         if (Object.keys(newErrors).length > 0) {
-        setRegisterErrors(newErrors);
-        return;
+            setRegisterErrors(newErrors);
+            return;
         }
 
         try {
-        const response = await register(registerData);
-        console.log("Registrerad", response);
-        setRegisterErrors({});
-        navigate("/");
+            const response = await register(registerData);
+            console.log("Registrerad", response);
+            setRegisterErrors({});
+            navigate("/");
         } catch (error) {
-        console.error("Registrering misslyckades", error);
+            console.error("Registrering misslyckades", error);
         }
     };
 
-    
+
     return (
         <div className="gFlexA flex-col md:flex-row gap-5 py-5 min-h-118">
             <div className="auth-card">

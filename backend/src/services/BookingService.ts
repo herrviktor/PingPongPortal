@@ -10,8 +10,8 @@ const getUserBookings = async (userId: string) => {
             model: FacilityModel,
             select: "name hourlyRate"
         });
-        if (!user) throw new Error("Användare hittades inte");
-        return user.bookings;
+    if (!user) throw new Error("Användare hittades inte");
+    return user.bookings;
 };
 
 const createBooking = async ({ facilityId, date, time, userId }: IBookingInput) => {
@@ -19,7 +19,7 @@ const createBooking = async ({ facilityId, date, time, userId }: IBookingInput) 
     if (!facility) throw new Error("Ingen sporthall hittades");
 
     const dateObj = facility.availableDates.find(d =>
-        d.date.toISOString().slice(0,10) === new Date(date).toISOString().slice(0,10)
+        d.date.toISOString().slice(0, 10) === new Date(date).toISOString().slice(0, 10)
     );
     if (!dateObj) throw new Error("Datum finns inte tillgängligt");
 
@@ -42,7 +42,7 @@ const createBooking = async ({ facilityId, date, time, userId }: IBookingInput) 
     };
 };
 
-const deleteBooking = async (userId: string, bookingId:string) => {
+const deleteBooking = async (userId: string, bookingId: string) => {
     const user = await UserModel.findById(userId);
     if (!user) throw new Error("Användare hittades inte");
 
@@ -64,15 +64,15 @@ const deleteBooking = async (userId: string, bookingId:string) => {
     );
 
     if (availableDate) {
-    const slot = availableDate.timeslots.find(s => s.time === bookingTime);
-    if (slot && slot.isBooked && slot.isBookedBy?.toString() === userId) {
-      slot.isBooked = false;
-      slot.isBookedBy = null;
-      await facility.save();
+        const slot = availableDate.timeslots.find(s => s.time === bookingTime);
+        if (slot && slot.isBooked && slot.isBookedBy?.toString() === userId) {
+            slot.isBooked = false;
+            slot.isBookedBy = null;
+            await facility.save();
+        }
     }
-  }
 
-  return true;
+    return true;
 };
 
 export default {

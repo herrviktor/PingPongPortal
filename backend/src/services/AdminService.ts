@@ -8,26 +8,26 @@ const getAllUsers = async () => {
 }
 
 const updateUser = async (id: string, data: IUpdateUser) => {
-  const updateData = { ...data };
-  if (data.username) {
-    if (!validateUsername(data.username)) {
-      throw new Error("Ogiltigt användarnamn. Bara bokstäver, siffror eller understreck, 3-20 tecken");
+    const updateData = { ...data };
+    if (data.username) {
+        if (!validateUsername(data.username)) {
+            throw new Error("Ogiltigt användarnamn. Bara bokstäver, siffror eller understreck, 3-20 tecken");
+        }
+        updateData.username = sanitize(data.username);
     }
-    updateData.username = sanitize(data.username);
-  }
-  if (data.email) {
-    if (!validateEmail(data.email)) {
-      throw new Error("Ogiltig e-postadress");
+    if (data.email) {
+        if (!validateEmail(data.email)) {
+            throw new Error("Ogiltig e-postadress");
+        }
+        updateData.email = sanitize(data.email);
     }
-    updateData.email = sanitize(data.email);
-  }
-  if (data.password) {
-    if (!validatePassword(data.password)) {
-      throw new Error("Lösenordet måste vara minst 8 tecken och högst 30");
+    if (data.password) {
+        if (!validatePassword(data.password)) {
+            throw new Error("Lösenordet måste vara minst 8 tecken och högst 30");
+        }
+        updateData.password = await bcrypt.hash(data.password, 10);
     }
-    updateData.password = await bcrypt.hash(data.password, 10);
-  }
-  return UserModel.findByIdAndUpdate(id, updateData, { new: true });
+    return UserModel.findByIdAndUpdate(id, updateData, { new: true });
 };
 
 const deleteUser = async (id: string) => {

@@ -1,6 +1,6 @@
-import { createContext, useState} from "react";
+import { createContext, useState } from "react";
 import * as authService from '../services/authService';
-import type {  } from "../services/authService";
+import type { } from "../services/authService";
 import type { IAuthContext, IAuthProviderProps, IUser } from "../interfaces/interfaces";
 import { useNavigate } from "react-router-dom";
 
@@ -13,9 +13,9 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
     });
     const navigate = useNavigate();
 
-    const login = async (email: string, password: string):Promise<void> => {
+    const login = async (email: string, password: string): Promise<void> => {
         try {
-            const data = await authService.login({ email, password});
+            const data = await authService.login({ email, password });
             setUser(data.user);
             localStorage.setItem("user", JSON.stringify(data.user));
             localStorage.setItem("token", data.token);
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
             return login(formData.email, formData.password);
         } catch (error) {
             console.error("Registrering misslyckades", error);
-            throw error; 
+            throw error;
         }
     };
 
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
     };
 
     return (
-        <AuthContext.Provider value={{user, login, register, logout}}>
+        <AuthContext.Provider value={{ user, login, register, logout }}>
             {children}
         </AuthContext.Provider>
     );
