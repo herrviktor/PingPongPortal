@@ -66,20 +66,28 @@ const Admin: React.FC = () => {
     const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!editUser || !editUser._id) return;
+
         setError(null);
+
         try {
-            await updateUser(editUser._id, editUser);
+            const { _id, password, ...rest } = editUser;
+            const payload: Partial<IUser> = {
+                username: rest.username?.trim(),
+                email: rest.email?.trim(),
+            };
+            if (password && !password.startsWith("$2b$") && password.trim() !== "") {
+                payload.password = password;
+            }
+
+            await updateUser(_id, payload);
             setEditUser(null);
             fetchUsers();
         } catch (err) {
-            if (err instanceof Error) {
-                setError(err.message);
-            }
-            else {
-                setError("Ett okänt fel inträffade");
-            }
+            if (err instanceof Error) setError(err.message);
+            else setError("Ett okänt fel inträffade");
         }
     };
+
 
     const handleDelete = async (id?: string) => {
         if (!id) return;
@@ -133,7 +141,7 @@ const Admin: React.FC = () => {
                                                 type="password"
                                                 id="user-password"
                                                 name="password"
-                                                value={editUser.password}
+                                                value={editUser.password && !editUser.password.startsWith("$2b$") ? editUser.password : ""}
                                                 onChange={handleEditChange}
                                             />
                                         </FormField>

@@ -47,7 +47,7 @@ const Dropdown = () => {
                             Bokningsvilkor
                         </CDropButton>
                     </li>
-                    {user && (
+                    {user?.isAdmin && (
                         <li>
                             <CDropButton onClick={() => { navigate("/admin"); setIsOpen(false); }}>
                                 Admin

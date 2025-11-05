@@ -17,31 +17,25 @@ const Header = ({ onSearchResults }: HeaderProps) => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const onSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const val = e.target.value;
-        setQuery(val);
-        setError("");
-        navigate("/")
-        try {
-            if (val.length > 2) {
-                const data = await searchFacilities(val);
-                console.log("Header: sökresultat:", data);
-                onSearchResults(data);
-            } else {
-                console.log("Header: tömmer sökresultat");
-                onSearchResults(null);
-            }
-        } catch (err) {
-            if (err instanceof Error) {
-                setError(err.message || "Fel vid sökning");;
-            }
-            else {
-                setError("Ett okänt fel inträffade");
-            }
-            console.log("Header: sökfel, tömmer resultat");
-            onSearchResults(null);
-        }
-    };
+    const handleSearchClick = async () => {
+    setError("");
+    try {
+      if (query.length > 0) {
+        const data = await searchFacilities(query);
+        onSearchResults(data);
+      } else {
+        onSearchResults(null);
+      }
+      navigate("/");
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message || "Fel vid sökning");
+      } else {
+        setError("Ett okänt fel inträffade");
+      }
+      onSearchResults(null);
+    }
+  };
 
 
     return (
@@ -59,9 +53,10 @@ const Header = ({ onSearchResults }: HeaderProps) => {
                         type="text"
                         placeholder="Sök Pingishall..."
                         value={query}
-                        onChange={onSearchChange}
+                        onChange={(e) => setQuery(e.target.value)}
                         className="searchInput"
                     />
+                    <CButton onClick={handleSearchClick}>Sök</CButton>
                     {error && <div style={{ color: "red" }}>{error}</div>}
                 </div>
             </div>

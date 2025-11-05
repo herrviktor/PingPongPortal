@@ -127,6 +127,7 @@ const Auth: React.FC = () => {
                             type="text"
                             id="register-username"
                             name="username"
+                            placeholder="Ex Viktor"
                             value={registerData.username}
                             onChange={handleRegisterChange}
                         />
@@ -139,6 +140,7 @@ const Auth: React.FC = () => {
                             type="email"
                             id="register-email"
                             name="email"
+                            placeholder="Ex mail@test.com"
                             value={registerData.email}
                             onChange={handleRegisterChange}
                         />
@@ -151,6 +153,7 @@ const Auth: React.FC = () => {
                             type="password"
                             id="register-password"
                             name="password"
+                            placeholder="Minst 8 tecken"
                             value={registerData.password}
                             onChange={handleRegisterChange}
                         />
