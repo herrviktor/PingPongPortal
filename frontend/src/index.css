@@ -7,6 +7,9 @@
   --text-col: #333333;
   --button-col: #003366;
   --theme-col: #F38D44;
+  --error-col: #EE322B;
+  --success-col: #4AE04A;
+  --update-col: #F4E32A;
 }
 
 @layer components {
@@ -47,6 +50,12 @@
   background-color: var(--body-col);
   color: var(--text-col);
   @apply rounded-[5px] px-3 py-2 text-lg sm:text-xl xl:text-2xl;
+}
+
+
+.error-text {
+    color: var(--error-col);
+    @apply text-xs sm:text-sm xl:text-lg;
 }
 
 .searchInput {

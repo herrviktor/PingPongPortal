@@ -14,7 +14,7 @@ if (!JWT_SECRET) {
 
 const register = async (data: IUserRegister) => {
     if (!validateUsername(data.username)) {
-        throw new Error("Ogiltigt användarnamn. 3-20 tecken, bara bokstäver, siffror eller understreck");
+        throw new Error("3-20 tecken, bara bokstäver, siffror eller understreck");
     }
     if (!validateEmail(data.email)) {
         throw new Error("Ogiltig e-postadress");

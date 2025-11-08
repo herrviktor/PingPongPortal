@@ -5,6 +5,7 @@ interface InputProps {
     placeholder?: string;
     value: string | undefined;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
     id?: string;
     name?: string;
     ariaLabel?: string;
@@ -16,6 +17,7 @@ const CInput: React.FC<InputProps> = ({
     placeholder,
     value,
     onChange,
+    onBlur,
     id,
     name,
     ariaLabel,
@@ -30,6 +32,7 @@ const CInput: React.FC<InputProps> = ({
             placeholder={placeholder}
             value={value}
             onChange={onChange}
+            onBlur={onBlur}
             id={id}
             name={name}
             aria-label={ariaLabel}

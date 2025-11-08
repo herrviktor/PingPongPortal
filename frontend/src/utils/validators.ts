@@ -38,3 +38,21 @@ export const validateUser = (user: IUser): IFormErrors => {
     if (!validatePassword(user.password)) errors.password = "Lösenordet måste vara 8-30 tecken";
     return errors;
 };
+
+export const handleBlur = (
+        fieldName: string,
+        setErrors: React.Dispatch<React.SetStateAction<IFormErrors>>
+    ) => (e: React.FocusEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        let error = "";
+
+        if (fieldName === "email" && !validateEmail(value)) {
+            error = "Ogiltig e-postadress";
+        } else if (fieldName === "username" && !validateUsername(value)) {
+            error = "3-20 tecken, endast bokstäver, siffror eller _";
+        } else if (fieldName === "password" && !validatePassword(value)) {
+            error = "Lösenordet måste vara 8-30 tecken";
+        }
+
+        setErrors(prev => ({ ...prev, [fieldName]: error }));
+    };
