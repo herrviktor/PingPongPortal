@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
-import type { IUser } from "../interfaces/interfaces"
+import type { IFormErrors, IUser } from "../interfaces/interfaces"
 import { createUser, deleteUser, getAllUsers, updateUser } from "../services/adminService";
 import FormField from "../components/formField";
 import CInput from "../components/Input";
 import CButton from "../components/Button";
+import { handleBlur, sanitize } from "../utils/validators";
 
 const Admin: React.FC = () => {
     const [users, setUsers] = useState<IUser[]>([]);
@@ -14,6 +15,8 @@ const Admin: React.FC = () => {
     });
     const [editUser, setEditUser] = useState<IUser | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const [newUserErrors, setNewUserErrors] = useState<IFormErrors>({});
+    const [editUserErrors, setEditUserErrors] = useState<IFormErrors>({});
 
     const fetchUsers = async () => {
         try {
@@ -34,12 +37,14 @@ const Admin: React.FC = () => {
     }, []);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNewUser(prev => ({ ...prev, [e.target.name]: e.target.value }));
+        const { name, value } = e.target;
+        setNewUser(prev => ({ ...prev, [name]: sanitize(value) }));
     };
 
     const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!editUser) return;
-        setEditUser({ ...editUser, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setEditUser({ ...editUser, [name]: sanitize(value) });
     };
 
     const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -125,7 +130,9 @@ const Admin: React.FC = () => {
                                                 name="username"
                                                 value={editUser.username}
                                                 onChange={handleEditChange}
+                                                onBlur={handleBlur("username", setEditUserErrors)}
                                             />
+                                            {editUserErrors.username && <p className="error-text">{editUserErrors.username}</p>}
                                         </FormField>
                                         <FormField id="user-email" label="E-post:">
                                             <CInput
@@ -134,7 +141,9 @@ const Admin: React.FC = () => {
                                                 name="email"
                                                 value={editUser.email}
                                                 onChange={handleEditChange}
+                                                onBlur={handleBlur("email", setEditUserErrors)}
                                             />
+                                            {editUserErrors.email && <p className="error-text">{editUserErrors.email}</p>}
                                         </FormField>
                                         <FormField id="user-password" label="Lösenord:">
                                             <CInput
@@ -143,7 +152,9 @@ const Admin: React.FC = () => {
                                                 name="password"
                                                 value={editUser.password && !editUser.password.startsWith("$2b$") ? editUser.password : ""}
                                                 onChange={handleEditChange}
+                                                onBlur={handleBlur("password", setEditUserErrors)}
                                             />
+                                            {editUserErrors.password && <p className="error-text">{editUserErrors.password}</p>}
                                         </FormField>
                                         <CButton type="submit" className="mt-3 bg-green-500">Spara</CButton>
                                         <CButton type="button" onClick={() => setEditUser(null)} className="mt-3 bg-red-500">Avbryt</CButton>
@@ -171,7 +182,9 @@ const Admin: React.FC = () => {
                                 placeholder="Ex Viktor"
                                 value={newUser.username}
                                 onChange={handleInputChange}
+                                onBlur={handleBlur("username", setNewUserErrors)}
                             />
+                            {newUserErrors.username && <p className="error-text">{newUserErrors.username}</p>}
                         </FormField>
                         <FormField id="create-email" label="E-Post:">
                             <CInput
@@ -181,7 +194,9 @@ const Admin: React.FC = () => {
                                 placeholder="Ex mail@test.com"
                                 value={newUser.email}
                                 onChange={handleInputChange}
+                                onBlur={handleBlur("email", setNewUserErrors)}
                             />
+                            {newUserErrors.email && <p className="error-text">{newUserErrors.email}</p>}
                         </FormField>
                         <FormField id="create-password" label="Lösenord:">
                             <CInput
@@ -191,7 +206,9 @@ const Admin: React.FC = () => {
                                 placeholder="Minst 8 tecken"
                                 value={newUser.password}
                                 onChange={handleInputChange}
+                                onBlur={handleBlur("password", setNewUserErrors)}
                             />
+                            {newUserErrors.password && <p className="error-text">{newUserErrors.password}</p>}
                         </FormField>
                         <CButton type="submit" className="mt-3 bg-green-500">Skapa</CButton>
                     </form>

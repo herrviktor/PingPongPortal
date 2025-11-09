@@ -1,5 +1,3 @@
-// samma validering i frontend som backend 
-
 import type { IFormErrors, IUser } from "../interfaces/interfaces";
 
 export const sanitize = (str: string): string => {
@@ -31,6 +29,10 @@ export const validatePassword = (password: string): boolean => {
     return passwordRegex.test(password);
 };
 
+export const validateSearch = (searchTerm: string): boolean => {
+  return typeof searchTerm === "string" && searchTerm.trim().length >= 1 && searchTerm.length <= 50;
+};
+
 export const validateUser = (user: IUser): IFormErrors => {
     const errors: IFormErrors = {};
     if (!validateUsername(user.username)) errors.username = "3-20 tecken, endast bokstäver, siffror eller _";
@@ -52,6 +54,8 @@ export const handleBlur = (
             error = "3-20 tecken, endast bokstäver, siffror eller _";
         } else if (fieldName === "password" && !validatePassword(value)) {
             error = "Lösenordet måste vara 8-30 tecken";
+        } else if (fieldName === "search" && !validateSearch(value)) {
+            error = "minst 1 tecken och högst 50";
         }
 
         setErrors(prev => ({ ...prev, [fieldName]: error }));

@@ -24,6 +24,9 @@ const createUser = async (req: Request, res: Response) => {
 
 const updateUser = async (req: Request, res: Response) => {
     try {
+        if (req.user && req.user.id === req.params.id) {
+            return res.status(403).json({ message: "Du kan inte uppdatera ditt eget admin konto via admin-panelen" });
+        }
         const user = await AdminService.updateUser(req.params.id, req.body);
         if (!user) {
             return res.status(404).json({ message: 'Användare hittades inte' });
@@ -37,6 +40,9 @@ const updateUser = async (req: Request, res: Response) => {
 
 const deleteUser = async (req: Request, res: Response) => {
     try {
+        if (req.user && req.user.id === req.params.id) {
+            return res.status(403).json({ message: "Du kan inte radera ditt eget admin konto" });
+        }
         const user = await AdminService.deleteUser(req.params.id);
         if (!user) {
             return res.status(404).json({ message: 'Användare hittades inte' });

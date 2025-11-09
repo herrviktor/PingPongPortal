@@ -64,5 +64,6 @@ export interface IFormErrors {
     email?: string;
     password?: string;
     username?: string;
+    search?: string;
     general?: string;
 }

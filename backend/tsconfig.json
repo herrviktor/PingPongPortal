@@ -1,18 +1,18 @@
 {
   "compilerOptions": {
-    "target": "ES2020",                        // Kompilera till modern JavaScript som Node stöder
-    "module": "commonjs",                      // Node.js modulsystem
-    "rootDir": "./src",                        // Källkodsmapp
-    "outDir": "./dist",                        // Utdatamapp för kompilerad kod
-    "strict": true,                           // Strikt typkontroll
-    "esModuleInterop": true,                  // Möjliggör import av CommonJS-moduler bättre
-    "skipLibCheck": true,                      // Skippa kontroll av deklarationsfiler för snabbare kompilering
-    "forceConsistentCasingInFileNames": true, // Säkerställer enhetlig filnamnscasing
-    "sourceMap": true,                         // Generera sourcemaps för debugging
+    "target": "ES2020",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
     "moduleResolution": "node",
     "resolveJsonModule": true
   },
-  "include": ["src/**/*"],                    // Kompilera alla TS i src och undermappar
-  "exclude": ["node_modules", "dist"]        // Exkludera node_modules och output-mapp
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
 
