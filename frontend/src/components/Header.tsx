@@ -2,9 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { searchFacilities } from "../services/facilityService";
 import { useState } from "react";
-import type { ISearchFacility } from "../interfaces/interfaces";
+import type { IFormErrors, ISearchFacility } from "../interfaces/interfaces";
 import CButton from "./Button";
 import Dropdown from "./DropDown";
+import { handleBlur, sanitize, validateSearch } from "../utils/validators";
 
 interface HeaderProps {
     onSearchResults: (results: ISearchFacility[] | null) => void;
@@ -15,27 +16,41 @@ const Header = ({ onSearchResults }: HeaderProps) => {
     const { logout, user } = useAuth();
     const [query, setQuery] = useState("");
     const [error, setError] = useState("");
+    const [searchErrors, setSearchErrors] = useState<IFormErrors>({});
     const navigate = useNavigate();
 
     const handleSearchClick = async () => {
-    setError("");
-    try {
-      if (query.length > 0) {
-        const data = await searchFacilities(query);
-        onSearchResults(data);
-      } else {
-        onSearchResults(null);
-      }
-      navigate("/");
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message || "Fel vid sökning");
-      } else {
-        setError("Ett okänt fel inträffade");
-      }
-      onSearchResults(null);
-    }
-  };
+        setError("");
+        try {
+            if (query.length > 0) {
+                const data = await searchFacilities(query);
+                onSearchResults(data);
+            } else {
+                onSearchResults(null);
+            }
+            navigate("/");
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message || "Fel vid sökning");
+            } else {
+                setError("Ett okänt fel inträffade");
+            }
+            onSearchResults(null);
+        }
+    };
+
+    const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = sanitize(e.target.value);
+        setQuery(value);
+
+        if (searchErrors.search) {
+            if (validateSearch(value)) {
+                setSearchErrors({ search: "" });
+            } else {
+                setSearchErrors({ search: "mellan 1 och 50 tecken" });
+            }
+        }
+    };
 
 
     return (
@@ -53,11 +68,14 @@ const Header = ({ onSearchResults }: HeaderProps) => {
                         type="text"
                         placeholder="Sök Pingishall..."
                         value={query}
-                        onChange={(e) => setQuery(e.target.value)}
+                        name="search"
+                        onChange={handleQueryChange}
+                        onBlur={handleBlur("search", setSearchErrors)}
                         className="searchInput"
                     />
                     <CButton onClick={handleSearchClick}>Sök</CButton>
-                    {error && <div style={{ color: "red" }}>{error}</div>}
+                    {searchErrors.search && <p className="error-text">{searchErrors.search}</p>}
+                    {error && <p className="error-text">{error}</p>}
                 </div>
             </div>
             <nav className="">

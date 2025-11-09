@@ -1,6 +1,5 @@
 import express from 'express';
 import FacilityController from '../controllers/FacilityController';
-import { isLoggedIn } from '../middlewares/middleware';
 
 const router = express.Router();
 

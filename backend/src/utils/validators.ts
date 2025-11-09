@@ -1,4 +1,3 @@
-// tar bort potentiellt skadlig input från användare.
 export const sanitize = (str: string): string => {
     if (!str || typeof str !== 'string') return '';
     let sanitized = str.trim();

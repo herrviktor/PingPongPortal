@@ -4,7 +4,7 @@ import type { IFormErrors, IUser } from "../interfaces/interfaces";
 import CInput from "../components/Input";
 import CButton from "../components/Button";
 import FormField from "../components/formField";
-import { sanitize, validateEmail, validatePassword, validateUsername } from "../utils/validators";
+import { sanitize, handleBlur } from "../utils/validators";
 import { useNavigate } from "react-router-dom";
 
 const Auth: React.FC = () => {
@@ -38,48 +38,56 @@ const Auth: React.FC = () => {
 
     const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-        const newErrors: IFormErrors = {};
-        if (!validateEmail(loginData.email)) newErrors.email = "Ogiltig e-postadress";
-        if (!loginData.password || loginData.password.length < 1) newErrors.password = "Ange lösenord";
-        if (Object.keys(newErrors).length > 0) {
-            setLoginErrors(newErrors);
-            return;
-        }
+
         try {
             const response = await login(loginData.email, loginData.password);
             console.log("Inloggad", response);
             setLoginErrors({});
             navigate("/");
-        } catch (error) {
-            console.error("Login misslyckades", error);
+        } catch (error: unknown) {
+            const errors: IFormErrors = {};
+
+            if (error instanceof Error) {
+                if (error.message.includes("3-20")) {
+                    errors.username = error.message;
+                } else {
+                    errors.general = error.message;
+                }
+            } else {
+                errors.general = "Ett okänt fel uppstod";
+            }
+            setLoginErrors(errors);
         }
     };
 
     const handleRegisterSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
 
-        const newErrors: IFormErrors = {};
-        if (!validateUsername(registerData.username))
-            newErrors.username = "3-20 tecken, endast bokstäver, siffror eller _";
-        if (!validateEmail(registerData.email))
-            newErrors.email = "Ogiltig e-postadress";
-        if (!validatePassword(registerData.password))
-            newErrors.password = "Lösenordet måste vara 8-30 tecken";
-
-        if (Object.keys(newErrors).length > 0) {
-            setRegisterErrors(newErrors);
-            return;
-        }
-
         try {
             const response = await register(registerData);
             console.log("Registrerad", response);
             setRegisterErrors({});
             navigate("/");
-        } catch (error) {
-            console.error("Registrering misslyckades", error);
+        } catch (error: unknown) {
+            const errors: IFormErrors = {};
+
+            if (error instanceof Error) {
+                if (error.message.includes("3-20")) {
+                    errors.username = error.message;
+                } else if (error.message.includes("e-post")) {
+                    errors.email = error.message;
+                } else if (error.message.includes("Lösenordet")) {
+                    errors.password = error.message;
+                } else {
+                    errors.general = error.message;
+                }
+            } else {
+                errors.general = "Ett okänt fel uppstod";
+            }
+            setRegisterErrors(errors);
         }
     };
+
 
 
     return (
@@ -94,9 +102,10 @@ const Auth: React.FC = () => {
                             name="email"
                             value={loginData.email}
                             onChange={handleLoginChange}
+                            onBlur={handleBlur("email", setLoginErrors)}
                         />
                         {loginErrors.email && (
-                            <p className="text-red-500 text-sm">{loginErrors.email}</p>
+                            <p className="error-text">{loginErrors.email}</p>
                         )}
                     </FormField>
                     <FormField id="login-password" label="Lösenord:">
@@ -106,13 +115,17 @@ const Auth: React.FC = () => {
                             name="password"
                             value={loginData.password}
                             onChange={handleLoginChange}
+                            onBlur={handleBlur("password", setLoginErrors)}
                         />
                         {loginErrors.password && (
-                            <p className="text-red-500 text-sm">{loginErrors.password}</p>
+                            <p className="error-text">{loginErrors.password}</p>
                         )}
                     </FormField>
                     <CButton type="submit">Logga In</CButton>
                 </form>
+                {loginErrors &&
+                    <p className="error-text">{loginErrors.general}</p>
+                }
             </div>
             <div>
                 <p className="text-xl md:text-2xl xl:text-3xl">
@@ -130,9 +143,10 @@ const Auth: React.FC = () => {
                             placeholder="Ex Viktor"
                             value={registerData.username}
                             onChange={handleRegisterChange}
+                            onBlur={handleBlur("username", setRegisterErrors)}
                         />
                         {registerErrors.username && (
-                            <p className="text-red-500 text-sm">{registerErrors.username}</p>
+                            <p className="error-text">{registerErrors.username}</p>
                         )}
                     </FormField>
                     <FormField id="register-email" label="E-post:">
@@ -143,9 +157,10 @@ const Auth: React.FC = () => {
                             placeholder="Ex mail@test.com"
                             value={registerData.email}
                             onChange={handleRegisterChange}
+                            onBlur={handleBlur("email", setRegisterErrors)}
                         />
                         {registerErrors.email && (
-                            <p className="text-red-500 text-sm">{registerErrors.email}</p>
+                            <p className="error-text">{registerErrors.email}</p>
                         )}
                     </FormField>
                     <FormField id="register-password" label="Lösenord:">
@@ -156,13 +171,17 @@ const Auth: React.FC = () => {
                             placeholder="Minst 8 tecken"
                             value={registerData.password}
                             onChange={handleRegisterChange}
+                            onBlur={handleBlur("password", setRegisterErrors)}
                         />
                         {registerErrors.password && (
-                            <p className="text-red-500 text-sm">{registerErrors.password}</p>
+                            <p className="error-text">{registerErrors.password}</p>
                         )}
                     </FormField>
                     <CButton type="submit">Registrera</CButton>
                 </form>
+                {registerErrors &&
+                    <p className="error-text">{registerErrors.general}</p>
+                }
             </div>
         </div>
     )

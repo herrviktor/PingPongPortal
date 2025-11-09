@@ -38,7 +38,7 @@ const createBooking = async (req: Request, res: Response) => {
 const deleteBooking = async (req: Request, res: Response) => {
     try {
         const userId = req.user.id;
-        const bookingId = req.params.id; // hämtas från URL :id
+        const bookingId = req.params.id;
 
         await BookingService.deleteBooking(userId, bookingId);
         res.json({ message: "Bokning raderad" });

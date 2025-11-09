@@ -5,6 +5,7 @@ import adminRoutes from "./routes/adminRoutes";
 import facilityRoutes from "./routes/facilityRoutes";
 import bookingRoutes from "./routes/bookingRoutes";
 import cors from 'cors';
+import { startCronJobs } from "./utils/cron";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -43,6 +44,7 @@ app.get('/', (req: Request, res: Response) => {
 const startServer = async (): Promise<void> => {
     try {
         await connectDB();
+        startCronJobs();
         app.listen(PORT, () => {
             console.log(`Server running on http://localhost:${PORT}`);
         });
